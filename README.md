@@ -29,7 +29,7 @@ To get aCHADemia up and running on your local machine, follow these steps:
 ### Setup
 1.  **Clone the Repository:**
     ```bash
-    git clone https://github.com/kaucrow/aCHADemia.git
+    git clone https://github.com/Kaucrow/aCHADemia.git
     ```
 
 2.  **Open in Visual Studio:**
