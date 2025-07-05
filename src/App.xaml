@@ -1,8 +1,8 @@
-﻿<Application x:Class="acadnetmy.App"
+﻿<Application x:Class="aCHADemia.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:acadnetmy"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:aCHADemia"
+             StartupUri="View/MainMenuWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <Color x:Key="LightPrimaryColor">#FF293136</Color>

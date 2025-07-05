@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace Acadnetmy
+namespace aCHADemia
 {
     /// <summary>
     /// Interaction logic for App.xaml

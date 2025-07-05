@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acadnetmy.Model
+namespace aCHADemia.Model
 {
     internal class Item
     {
