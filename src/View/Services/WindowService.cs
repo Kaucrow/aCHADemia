@@ -3,52 +3,62 @@ using System.Windows;
 
 namespace aCHADemia.View.Services
 {
-    internal class WindowService : IWindowService
+    public class WindowService : IWindowService
     {
-        private Window? _currentWindow;
+        private readonly Dictionary<string, Type> _windows = [];
+        private Window? _owner;
 
-        public WindowService(Window initialWindow)
+        public void Configure(string key, Type windowType)
         {
-            _currentWindow = initialWindow;
+            if (!typeof(Window).IsAssignableFrom(windowType))
+                throw new ArgumentException("Type must be a Window");
+
+            _windows[key] = windowType;
         }
 
-        public void OpenWindow<T>(Action? onClosing = null) where T : Window, new()
+        public void SetOwner(Window owner)
         {
-            var currentState = new
+            _owner = owner;
+        }
+
+        public void OpenWindow<T>(object? parameter = null) where T : Window
+        {
+            var window = CreateWindow(typeof(T), parameter);
+            window.Show();
+        }
+
+        public bool? ShowDialog<T>(object? parameter = null) where T : Window
+        {
+            var window = CreateWindow(typeof(T), parameter);
+            return window.ShowDialog();
+        }
+
+        private Window CreateWindow(Type windowType, object? parameter)
+        {
+            var window = Activator.CreateInstance(windowType) as Window ??
+                throw new InvalidOperationException($"Failed to create instance of {windowType.Name}");
+
+            if (window.DataContext is IWindowAware aware)
             {
-                State = _currentWindow?.WindowState ?? WindowState.Normal,
-                Top = _currentWindow?.Top ?? 100,  // Default values if null
-                Left = _currentWindow?.Left ?? 100,
-                Width = _currentWindow?.ActualWidth ?? 800,
-                Height = _currentWindow?.ActualHeight ?? 600,
-                Topmost = _currentWindow?.Topmost ?? false
-            };
+                aware.OnWindowOpened(parameter);
+            }
 
-            var newWindow = new T();
+            if (_owner != null)
+            {
+                window.Owner = _owner;
+                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            }
+            else
+            {
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            }
 
-            // Apply previous window properties
-            newWindow.WindowState = WindowState.Normal; // Must reset before setting size/position
-            newWindow.Top = currentState.Top;
-            newWindow.Left = currentState.Left;
-            newWindow.Width = currentState.Width;
-            newWindow.Height = currentState.Height;
-            newWindow.Topmost = currentState.Topmost;
-
-            // Restore state last (maximized/fullscreen will override size/position)
-            newWindow.WindowState = currentState.State;
-
-            newWindow.Closed += (s, e) => onClosing?.Invoke();
-
-            newWindow.Show();
-            
-            _currentWindow?.Close();
-
-            _currentWindow = newWindow;
+            return window;
         }
 
-        public void CloseCurrentWindow()
+        public void CloseWindow(Window window)
         {
-            _currentWindow?.Close();
+            window?.Close();
         }
     }
 }

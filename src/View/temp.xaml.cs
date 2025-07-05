@@ -1,4 +1,4 @@
-﻿using System;
+﻿using aCHADemia.ViewModel;
 using System.Windows;
 
 namespace aCHADemia.View
