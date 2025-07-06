@@ -8,8 +8,9 @@ namespace aCHADemia.ViewModel
     {
         public ReportsViewModel()
         {
+            NavigateToGradesSheetCommand = new RelayCommand(execute => NavigateTo<GradeSheetPage>());
         }
 
-        public Action? CloseAction { get; set; }
+        public RelayCommand NavigateToGradesSheetCommand { get; }
     }
 }

@@ -4,52 +4,55 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:aCHADemia.View.Pages"
+      xmlns:userControls="clr-namespace:aCHADemia.View.UserControls"
       xmlns:fa="http://schemas.fontawesome.io/icons/"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainMenuPage"
-      Background="White">
+      Background="{StaticResource LightBackgroundBrush}">
     
-    <Page.Resources>
-        <Style x:Key="IconTextStyle" TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="pack://application:,,,/Fonts/#Poppins"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0,10,0,0"/>
-            <Setter Property="Foreground" Value="{StaticResource LightPrimaryBrush}"/>
-        </Style>
-    </Page.Resources>
-
     <Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Margin="0,0,60,0" Command="{Binding NavigateToReportsCommand}">
-                <StackPanel>
-                    <fa:ImageAwesome Icon="FileText" Foreground="{StaticResource LightPrimaryBrush}" Width="80" Height="80"/>
-                    <TextBlock Text="Notas" Style="{StaticResource IconTextStyle}" Margin="0,20,0,0"/>
-                </StackPanel>
-            </Button>
+            <userControls:NavigationButton
+                Icon="FileText"
+                Text="Notas"
+                Command="{Binding NavigateToReportsCommand}"
+                Brush="{StaticResource LightPrimaryBrush}"
+                IconSize="80"
+                FontSize="16"
+                ButtonMargin="0,0,60,0"
+                TextMargin="0,20,0,0"/>
 
-            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Margin="0,0,60,0">
-                <StackPanel>
-                    <fa:ImageAwesome Icon="User" Foreground="{StaticResource LightPrimaryBrush}" Width="80" Height="80"/>
-                    <TextBlock Text="Inscripcion" Style="{StaticResource IconTextStyle}" Margin="0,20,0,0"/>
-                </StackPanel>
-            </Button>
-
-            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Margin="0,0,60,0">
-                <StackPanel>
-                    <fa:ImageAwesome Icon="Pencil" Foreground="{StaticResource LightPrimaryBrush}" Width="80" Height="80"/>
-                    <TextBlock Text="Mantenimiento" Style="{StaticResource IconTextStyle}" Margin="0,20,0,0"/>
-                </StackPanel>
-            </Button>
-
-            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <StackPanel>
-                    <fa:ImageAwesome Icon="Inbox" Foreground="{StaticResource LightPrimaryBrush}" Width="80" Height="80"/>
-                    <TextBlock Text="Reportes" Style="{StaticResource IconTextStyle}" Margin="0,20,0,0"/>
-                </StackPanel>
-            </Button>
+            <userControls:NavigationButton
+                Icon="User"
+                Text="Inscripción"
+                Command="{Binding NavigateToReportsCommand}"
+                Brush="{StaticResource LightPrimaryBrush}"
+                IconSize="80"
+                FontSize="16"
+                ButtonMargin="0,0,60,0"
+                TextMargin="0,20,0,0"/>
+            
+            <userControls:NavigationButton
+                Icon="Pencil"
+                Text="Mantenimiento"
+                Command="{Binding NavigateToReportsCommand}"
+                Brush="{StaticResource LightPrimaryBrush}"
+                IconSize="80"
+                FontSize="16"
+                ButtonMargin="0,0,60,0"
+                TextMargin="0,20,0,0"/>
+            
+             <userControls:NavigationButton
+                Icon="Inbox"
+                Text="Reportes"
+                Command="{Binding NavigateToReportsCommand}"
+                Brush="{StaticResource LightPrimaryBrush}"
+                IconSize="80"
+                FontSize="16"
+                ButtonMargin="0"
+                TextMargin="0,20,0,0"/>
+           
         </StackPanel>
     </Grid>
 </Page>

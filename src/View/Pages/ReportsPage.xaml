@@ -5,10 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:aCHADemia.View"
       xmlns:fa="http://schemas.fontawesome.io/icons/"
+      xmlns:userControls="clr-namespace:aCHADemia.View.UserControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Reports"
-      Background="White">
+      Background="{StaticResource LightBackgroundBrush}">
 
     <Page.Resources>
         <Style x:Key="IconTextStyle" TargetType="TextBlock">
@@ -21,29 +22,28 @@
         </Style>
     </Page.Resources>
 
-    <!-- Single root container -->
     <Grid>
-        <!-- Frame for navigation (hidden by default) -->
-        <Frame x:Name="ContentFrame" Visibility="Collapsed"/>
+        <userControls:BackButton Command="{Binding GoBackCommand}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Margin="30"
+                               IconBrush="{StaticResource LightPrimaryBrush}"
+                               TextBrush="{StaticResource LightPrimaryBrush}"/>
 
-        <!-- Main menu content -->
         <StackPanel Orientation="Horizontal" 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center">
-            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
-                    Command="{Binding GoBackCommand}">
-                <StackPanel>
-                    <fa:ImageAwesome Icon="FileText" 
-                                   Foreground="{StaticResource LightPrimaryBrush}" 
-                                   Width="80" Height="80"/>
-                    <TextBlock Text="Planilla de Notas" 
-                              Style="{StaticResource IconTextStyle}" 
-                              Margin="0,20,0,0"/>
-                </StackPanel>
-            </Button>
-
-            <!-- Other buttons remain the same -->
-            <!-- ... -->
+            
+            <userControls:NavigationButton
+                Icon="FileText"
+                Text="Planilla de Notas"
+                Command="{Binding NavigateToGradesSheetCommand}"
+                Brush="{StaticResource LightPrimaryBrush}"
+                IconSize="80"
+                FontSize="16"
+                ButtonMargin="0"
+                TextMargin="0,20,0,0"/>
+            
         </StackPanel>
     </Grid>
 </Page>

@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="aCHADemia.View.UserControls.NavigationButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             x:Name="root">
+
+    <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+            Command="{Binding Command, ElementName=root}"
+            Margin="{Binding ButtonMargin, ElementName=root}">
+        <StackPanel>
+            <fa:ImageAwesome    Icon="{Binding Icon, ElementName=root}" 
+                                Foreground="{Binding Brush, ElementName=root}" 
+                                Width="{Binding IconSize, ElementName=root}"
+                                Height="{Binding IconSize, ElementName=root}"/>
+            <TextBlock  FontFamily="pack://application:,,,/Fonts/#Poppins"
+                        Text="{Binding Text, ElementName=root}"
+                        Foreground="{Binding Brush, ElementName=root}"
+                        FontSize="{Binding FontSize, ElementName=root}"
+                        FontWeight="Bold"
+                        TextAlignment="Center"
+                        Margin="{Binding TextMargin, ElementName=root}"/>
+        </StackPanel>
+    </Button>
+</UserControl>

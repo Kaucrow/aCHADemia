@@ -1,0 +1,144 @@
+﻿<UserControl x:Class="aCHADemia.View.UserControls.Dropdown"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:aCHADemia.View.UserControls"
+             mc:Ignorable="d" 
+             x:Name="root"
+             d:DesignHeight="40" d:DesignWidth="200"
+             d:DataContext="{d:DesignInstance Type=local:Dropdown}">
+
+    <UserControl.Resources>
+        <!-- Design-time sample data -->
+        <x:Array x:Key="DesignTimeItems" Type="{x:Type sys:String}">
+            <sys:String>Matemáticas</sys:String>
+            <sys:String>Física</sys:String>
+            <sys:String>Química</sys:String>
+        </x:Array>
+        
+        <!-- Transparent ToggleButton Style -->
+        <Style x:Key="InvisibleToggleButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="Transparent"
+                                 BorderBrush="Transparent"
+                                 BorderThickness="0">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Transparent" />
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="Transparent" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <!-- ComboBox Style -->
+        <Style x:Key="InternalComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Background" Value="{Binding Background, ElementName=root}"/>
+            <Setter Property="BorderBrush" Value="{Binding BorderBrush, ElementName=root}"/>
+            <Setter Property="BorderThickness" Value="{Binding BorderThickness, ElementName=root}"/>
+            <Setter Property="Foreground" Value="{Binding Foreground, ElementName=root}"/>
+            <Setter Property="FontFamily" Value="{Binding FontFamily, ElementName=root, FallbackValue='pack://application:,,,/Fonts/#Poppins'}"/>
+            <Setter Property="FontSize" Value="{Binding FontSize, ElementName=root, FallbackValue=14}"/>
+            <Setter Property="Padding" Value="{Binding Padding, ElementName=root, FallbackValue='8,4'}"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Border"
+                                                            Storyboard.TargetProperty="BorderBrush.Color"
+                                                            To="#999999"
+                                                            Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled"/>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="FocusStates">
+                                    <VisualState x:Name="Focused"/>
+                                    <VisualState x:Name="Unfocused"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Border x:Name="Border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="8">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ContentPresenter x:Name="ContentSite"
+                                                  Grid.Column="0"
+                                                  Content="{TemplateBinding SelectionBoxItem}"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  VerticalAlignment="Center"/>
+                                    
+                                     <Path x:Name="Arrow"
+                                          Grid.Column="1"
+                                          Fill="{Binding ArrowBrush, ElementName=root, FallbackValue='#666666'}"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Margin="4,0,4,0"
+                                          Data="M0,0 L4,4 8,0 Z"/>
+
+                                     <ToggleButton x:Name="ToggleButton"
+                                              Style="{StaticResource InvisibleToggleButtonStyle}"
+                                              Grid.ColumnSpan="2"
+                                              Background="Transparent"
+                                              BorderThickness="0"
+                                              IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                              Focusable="False">
+                                     </ToggleButton>
+                                </Grid>
+                            </Border>
+
+                            <Popup x:Name="Popup"
+                               Placement="Bottom"
+                               Focusable="False"
+                               AllowsTransparency="True"
+                               IsOpen="{TemplateBinding IsDropDownOpen}"
+                               PopupAnimation="Slide">
+                                <Border BorderThickness="1"
+                                    BorderBrush="{Binding DropdownBorderBrush, ElementName=root, FallbackValue='#CCCCCC'}"
+                                    Background="{Binding DropdownBackground, ElementName=root, FallbackValue='White'}">
+                                    <ScrollViewer>
+                                        <ItemsPresenter/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <ComboBox x:Name="InternalComboBox"
+              Style="{StaticResource InternalComboBoxStyle}"
+              ItemsSource="{Binding ItemsSource, ElementName=root, 
+                                    FallbackValue={StaticResource DesignTimeItems}}"
+              SelectedItem="{Binding SelectedItem, ElementName=root, Mode=TwoWay}"
+              DisplayMemberPath="{Binding DisplayMemberPath, ElementName=root}"
+              SelectedValuePath="{Binding SelectedValuePath, ElementName=root}"
+              d:ItemsSource="{StaticResource DesignTimeItems}"
+              d:SelectedItem="{Binding [0], Source={StaticResource DesignTimeItems}}" SelectionChanged="InternalComboBox_SelectionChanged"/>
+</UserControl>

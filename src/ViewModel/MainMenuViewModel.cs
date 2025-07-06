@@ -1,6 +1,5 @@
 ﻿using aCHADemia.MVVM;
 using aCHADemia.View.Pages;
-using System.Windows;
 
 namespace aCHADemia.ViewModel
 {
@@ -11,7 +10,7 @@ namespace aCHADemia.ViewModel
             NavigateToReportsCommand = new RelayCommand(execute => NavigateTo<ReportsPage>());
         }
 
-        public Action? CloseAction { get; set; }
         public RelayCommand NavigateToReportsCommand { get; }
+        public RelayCommand HelloWorldCommand { get; }
     }
 }

@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Diagnostics;
+using aCHADemia.View.Services;
 
 namespace aCHADemia.MVVM
 {
@@ -15,6 +16,9 @@ namespace aCHADemia.MVVM
 
         public ViewModelBase()
         {
+            if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+                return;
+
             _windowService = App.WindowService ?? throw new ArgumentNullException(nameof(App.WindowService));
             _navigationService = App.NavigationService ?? throw new ArgumentNullException(nameof(App.NavigationService));
             
