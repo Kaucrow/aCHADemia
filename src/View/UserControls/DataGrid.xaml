@@ -9,9 +9,9 @@
 
     <UserControl.Resources>
         <Style TargetType="TextBlock" x:Key="GridTextStyle">
-            <Setter Property="FontFamily" Value="{Binding FontFamily, ElementName=root, FallbackValue=Segoe UI}"/>
-            <Setter Property="FontSize" Value="{Binding FontSize, ElementName=root, FallbackValue=12}"/>
-            <Setter Property="Foreground" Value="{Binding FontColor, ElementName=root, FallbackValue=Black}"/>
+            <Setter Property="FontFamily" Value="{Binding FontFamily, ElementName=root}"/>
+            <Setter Property="FontSize" Value="{Binding FontSize, ElementName=root}"/>
+            <Setter Property="Foreground" Value="{Binding FontColor, ElementName=root}"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="8,4"/>
@@ -19,88 +19,98 @@
         </Style>
     </UserControl.Resources>
 
-    <Border BorderBrush="{Binding BorderColor, ElementName=root, FallbackValue=LightGray}"
-            BorderThickness="1"
-            CornerRadius="4">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <Border Grid.Row="0" 
+                Background="{Binding HeaderBackground, ElementName=root}"
+                Padding="0,8"
+                Margin="0,0,17,0">
+            <ScrollViewer x:Name="HeaderScrollViewer"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Disabled"
+                          Padding="0">
+                <ItemsControl ItemsSource="{Binding ColumnHeaders, ElementName=root}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="1"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                                <TextBlock Text="{Binding}"
+                                           Style="{StaticResource GridTextStyle}"
+                                           FontWeight="Bold"
+                                           FontSize="14"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
 
-            <!-- Header -->
-            <Border Grid.Row="0" 
-                    Background="{Binding HeaderBackground, ElementName=root, FallbackValue=WhiteSmoke}"
-                    Padding="0,8">
-                <ScrollViewer x:Name="HeaderScrollViewer"
+        <Border Grid.Row="1"
+                BorderBrush="{Binding BorderColor, ElementName=root, FallbackValue=LightGray}"
+                BorderThickness="{Binding BorderThickness, ElementName=root}"
+                CornerRadius="{Binding BorderRadius, ElementName=root}"
+                ClipToBounds="True">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Scrollable content area -->
+                <!-- The main ScrollViewer for the rows -->
+                <ScrollViewer Grid.Row="1" 
+                              VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Auto"
-                              VerticalScrollBarVisibility="Disabled">
-                    <ItemsControl ItemsSource="{Binding ColumnHeaders, ElementName=root}">
+                              CanContentScroll="True"
+                              x:Name="ContentScrollViewer"
+                              PreviewMouseWheel="ContentScrollViewer_PreviewMouseWheel"
+                              ClipToBounds="True"
+                              Margin="0,10,0,10">
+                    <ItemsControl ItemsSource="{Binding Rows, ElementName=root}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <!-- The UniformGrid for headers should still have 1 row -->
-                                <UniformGrid Rows="1"/>
+                                <StackPanel Orientation="Vertical"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Focusable" Value="False"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border BorderThickness="0,0,1,0"
-                                        BorderBrush="{Binding HeaderBorderColor, ElementName=root, FallbackValue=Gray}"
-                                        Width="{Binding ColumnWidth, ElementName=root, FallbackValue=120}">
-                                    <TextBlock Text="{Binding}"
-                                               Style="{StaticResource GridTextStyle}"
-                                               FontWeight="Bold"/>
+                                <Border BorderThickness="0,0,0,1"
+                                        BorderBrush="{Binding RowBorderColor, ElementName=root, FallbackValue=LightGray}">
+                                    <ItemsControl ItemsSource="{Binding}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <!-- The UniformGrid for cell content within a row -->
+                                                <UniformGrid Rows="1"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Width="{Binding ColumnWidth, ElementName=root, FallbackValue=120}">
+                                                    <TextBlock Text="{Binding}"
+                                                               Style="{StaticResource GridTextStyle}"/>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
-            </Border>
-
-            <!-- Scrollable content area -->
-            <!-- The main ScrollViewer for the rows -->
-            <ScrollViewer Grid.Row="1" 
-                          VerticalScrollBarVisibility="Auto"
-                          HorizontalScrollBarVisibility="Auto"
-                          CanContentScroll="True"
-                          x:Name="ContentScrollViewer"
-                          PreviewMouseWheel="ContentScrollViewer_PreviewMouseWheel">
-                <ItemsControl ItemsSource="{Binding Rows, ElementName=root}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemContainerStyle>
-                        <Style TargetType="ContentPresenter">
-                            <Setter Property="Focusable" Value="False"/>
-                        </Style>
-                    </ItemsControl.ItemContainerStyle>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border BorderThickness="0,0,0,1"
-                                    BorderBrush="{Binding RowBorderColor, ElementName=root, FallbackValue=LightGray}">
-                                <ItemsControl ItemsSource="{Binding}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <!-- The UniformGrid for cell content within a row -->
-                                            <UniformGrid Rows="1"/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <Border Width="{Binding ColumnWidth, ElementName=root, FallbackValue=120}">
-                                                <TextBlock Text="{Binding}"
-                                                           Style="{StaticResource GridTextStyle}"/>
-                                            </Border>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </Grid>
-    </Border>
+            </Grid>
+        </Border>
+    </Grid>
 </UserControl>

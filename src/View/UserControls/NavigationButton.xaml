@@ -5,8 +5,7 @@
              x:Name="root">
 
     <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-            Command="{Binding Command, ElementName=root}"
-            Margin="{Binding ButtonMargin, ElementName=root}">
+            Command="{Binding Command, ElementName=root}">
         <StackPanel>
             <fa:ImageAwesome    Icon="{Binding Icon, ElementName=root}" 
                                 Foreground="{Binding Brush, ElementName=root}" 
@@ -16,7 +15,7 @@
                         Text="{Binding Text, ElementName=root}"
                         Foreground="{Binding Brush, ElementName=root}"
                         FontSize="{Binding FontSize, ElementName=root}"
-                        FontWeight="Bold"
+                        FontWeight="Medium"
                         TextAlignment="Center"
                         Margin="{Binding TextMargin, ElementName=root}"/>
         </StackPanel>

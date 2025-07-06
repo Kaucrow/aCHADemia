@@ -140,5 +140,5 @@
               DisplayMemberPath="{Binding DisplayMemberPath, ElementName=root}"
               SelectedValuePath="{Binding SelectedValuePath, ElementName=root}"
               d:ItemsSource="{StaticResource DesignTimeItems}"
-              d:SelectedItem="{Binding [0], Source={StaticResource DesignTimeItems}}" SelectionChanged="InternalComboBox_SelectionChanged"/>
+              d:SelectedItem="{Binding [0], Source={StaticResource DesignTimeItems}}"/>
 </UserControl>

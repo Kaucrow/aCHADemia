@@ -41,7 +41,6 @@
                 Brush="{StaticResource LightPrimaryBrush}"
                 IconSize="80"
                 FontSize="16"
-                ButtonMargin="0"
                 TextMargin="0,20,0,0"/>
             
         </StackPanel>

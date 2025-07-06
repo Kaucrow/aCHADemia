@@ -16,31 +16,28 @@
             <userControls:NavigationButton
                 Icon="FileText"
                 Text="Notas"
-                Command="{Binding NavigateToReportsCommand}"
                 Brush="{StaticResource LightPrimaryBrush}"
                 IconSize="80"
                 FontSize="16"
-                ButtonMargin="0,0,60,0"
+                Margin="0,0,60,0"
                 TextMargin="0,20,0,0"/>
 
             <userControls:NavigationButton
                 Icon="User"
                 Text="Inscripción"
-                Command="{Binding NavigateToReportsCommand}"
                 Brush="{StaticResource LightPrimaryBrush}"
                 IconSize="80"
                 FontSize="16"
-                ButtonMargin="0,0,60,0"
+                Margin="0,0,60,0"
                 TextMargin="0,20,0,0"/>
             
             <userControls:NavigationButton
                 Icon="Pencil"
                 Text="Mantenimiento"
-                Command="{Binding NavigateToReportsCommand}"
                 Brush="{StaticResource LightPrimaryBrush}"
                 IconSize="80"
                 FontSize="16"
-                ButtonMargin="0,0,60,0"
+                Margin="0,0,60,0"
                 TextMargin="0,20,0,0"/>
             
              <userControls:NavigationButton
@@ -50,7 +47,7 @@
                 Brush="{StaticResource LightPrimaryBrush}"
                 IconSize="80"
                 FontSize="16"
-                ButtonMargin="0"
+                Margin="0"
                 TextMargin="0,20,0,0"/>
            
         </StackPanel>

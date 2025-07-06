@@ -52,94 +52,93 @@
                 CornerRadius="20">
 
                 <!--  Content Container  -->
-                    <Grid Margin="20">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="auto" />
-                        </Grid.RowDefinitions>
-                        
-                        <!--  Dropdowns  -->
-                        <Grid Grid.Row="0" Margin="0,10,0,20">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <!--  Dropdowns  -->
+                    <Grid Grid.Row="0" Margin="0,10,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                            <!-- Subject dropdown -->
-                            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,15,0">
-                                <TextBlock
-                                Margin="0,0,0,10"
-                                HorizontalAlignment="Center"
+                        <!-- Subject dropdown -->
+                        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,15,0">
+                            <TextBlock
+                            Margin="0,0,0,10"
+                            HorizontalAlignment="Center"
+                            Foreground="{StaticResource LightPrimaryBrush}"
+                            FontSize="16"
+                            FontWeight="Medium"
+                            FontFamily="{StaticResource NormalFont}">
+                            Materia:
+                            </TextBlock>
+
+                            <userControls:Dropdown 
+                                Width="200"
+                                ItemsSource="{Binding Subjects}" 
+                                SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
+                                DisplayMemberPath="Name"
+                                Background="{StaticResource LightBackgroundBrush}"
+                                BorderBrush="#666666"
+                                BorderThickness="2"
                                 Foreground="{StaticResource LightPrimaryBrush}"
-                                FontSize="16"
-                                FontWeight="Medium"
-                                FontFamily="{StaticResource NormalFont}">
-                                Materia:
-                                </TextBlock>
+                                FontFamily="{StaticResource NormalFont}"
+                                ArrowBrush="#666666"
+                                DropdownBackground="{StaticResource LightBackgroundBrush}"
+                                DropdownBorderBrush="#CCCCCC"/>
+                        </StackPanel>
 
-                                <userControls:Dropdown 
-                                    Width="200"
-                                    ItemsSource="{Binding Subjects}" 
-                                    SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
-                                    DisplayMemberPath="Name"
-                                    Background="{StaticResource LightBackgroundBrush}"
-                                    BorderBrush="#666666"
-                                    BorderThickness="2"
-                                    Foreground="{StaticResource LightPrimaryBrush}"
-                                    FontFamily="{StaticResource NormalFont}"
-                                    ArrowBrush="#666666"
-                                    DropdownBackground="{StaticResource LightBackgroundBrush}"
-                                    DropdownBorderBrush="#CCCCCC"/>
-                            </StackPanel>
+                        <!-- Section dropdown -->
+                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="15,0,0,0">
+                            <TextBlock
+                            Margin="0,0,0,10"
+                            HorizontalAlignment="Center"
+                            Foreground="{StaticResource LightPrimaryBrush}"
+                            FontSize="16"
+                            FontWeight="Medium"
+                            FontFamily="{StaticResource NormalFont}">
+                            Sección:
+                            </TextBlock>
 
-                            <!-- Section dropdown -->
-                            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="15,0,0,0">
-                                <TextBlock
-                                Margin="0,0,0,10"
-                                HorizontalAlignment="Center"
+                            <userControls:Dropdown 
+                                Width="200"
+                                ItemsSource="{Binding Subjects}" 
+                                SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
+                                DisplayMemberPath="Name"
+                                Background="{StaticResource LightBackgroundBrush}"
+                                BorderBrush="#666666"
+                                BorderThickness="2"
                                 Foreground="{StaticResource LightPrimaryBrush}"
-                                FontSize="16"
-                                FontWeight="Medium"
-                                FontFamily="{StaticResource NormalFont}">
-                                Sección:
-                                </TextBlock>
-
-                                <userControls:Dropdown 
-                                    Width="200"
-                                    ItemsSource="{Binding Subjects}" 
-                                    SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
-                                    DisplayMemberPath="Name"
-                                    Background="{StaticResource LightBackgroundBrush}"
-                                    BorderBrush="#666666"
-                                    BorderThickness="2"
-                                    Foreground="{StaticResource LightPrimaryBrush}"
-                                    FontFamily="{StaticResource NormalFont}"
-                                    ArrowBrush="#666666"
-                                    DropdownBackground="{StaticResource LightBackgroundBrush}"
-                                    DropdownBorderBrush="#CCCCCC"/>
-                            </StackPanel>
-                        </Grid>
-
-                        <userControls:DataGrid Grid.Row="1"
+                                FontFamily="{StaticResource NormalFont}"
+                                ArrowBrush="#666666"
+                                DropdownBackground="{StaticResource LightBackgroundBrush}"
+                                DropdownBorderBrush="#CCCCCC"/>
+                        </StackPanel>
+                    </Grid>
+                
+                    <!-- Data grid -->
+                    <userControls:DataGrid Grid.Row="1"
                             ColumnHeaders="{Binding ColumnHeaders}"
                             Rows="{Binding Rows}"
+                            BorderColor="{StaticResource LightAccentBrush}"
+                            BorderThickness="2"
+                            BorderRadius="6"
+                            FontFamily="{StaticResource NormalFont}"
+                            FontColor="{StaticResource LightPrimaryBrush}"
                             ColumnWidth="120"/>
-                        
-                        
-                        <!--  Get Report Button  -->
-                        <Button
-                        Grid.Row="2"
-                        Width="150"
-                        Height="40"
-                        Margin="0,20,0,0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom"
-                        Foreground="{StaticResource LightBackgroundBrush}"
-                        Background="{StaticResource LightPrimaryBrush}"
-                        FontFamily="{StaticResource NormalFont}"
-                        Content="Obtener planilla" />
-                    </Grid>
+
+                    <!--  Get Report Button  -->
+                    <userControls:Button Grid.Row="2"
+                                         ButtonContent="Obtener planilla"
+                                         FontSize="12"
+                                         CornerRadius="4"
+                                         Margin="0,20,0,0"/>
+                </Grid>
             </Border>
         </Grid>
     </Grid>
