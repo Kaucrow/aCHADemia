@@ -34,7 +34,7 @@ namespace aCHADemia.ViewModel
         {
             new List<string> { "101", "Laptop", "$999" },
             new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "103", "Elatla", "2 Bs." },
+            new List<string> { "102", "Elatla", "2 Bs." },
             new List<string> { "102", "Mouse", "$25" },
             new List<string> { "102", "Mouse", "$25" },
             new List<string> { "102", "Mouse", "$25" },

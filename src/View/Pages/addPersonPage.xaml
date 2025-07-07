@@ -1,0 +1,155 @@
+<Page
+  x:Class="aCHADemia.View.Pages.addPersonPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:vm="clr-namespace:aCHADemia.ViewModel"
+  xmlns:local="clr-namespace:aCHADemia"
+  xmlns:userControls="clr-namespace:aCHADemia.View.UserControls"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  Title="addPersonPage"
+  mc:Ignorable="d"
+  d:DesignHeight="768"
+  d:DesignWidth="1366"
+  d:DataContext="{d:DesignInstance Type=vm:GradeSheetViewModel, IsDesignTimeCreatable=True}"
+  Background="{StaticResource LightBackgroundBrush}">
+
+	<Grid>
+		<userControls:BackButton Command="{Binding GoBackCommand}"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Margin="30"
+                               IconBrush="{StaticResource LightPrimaryBrush}"
+                               TextBrush="{StaticResource LightPrimaryBrush}"/>
+
+		<!-- Title and main container grid -->
+		<Grid
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"
+     >
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+
+			<!--  Title  -->
+			<Border Grid.Row="1"
+                Width="565"
+                Height="500"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BorderBrush="{StaticResource LightAccentBrush}"
+                BorderThickness="3"
+                CornerRadius="20">
+
+				<Grid Margin="20">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="auto" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="auto" />
+					</Grid.RowDefinitions>
+
+					<!-- Data grid -->
+
+					<!--  Dropdowns  -->
+					<Grid Grid.Row="0" Margin="0,10,0,20">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<!-- Subject dropdown -->
+						<StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,15,0"/>
+
+						<!-- Section dropdown -->
+						<StackPanel Grid.Column="1" Orientation="Vertical" Margin="15,0,0,0"/>
+					</Grid>
+
+					<!--  Get Report Button  -->
+					<userControls:Button Grid.Row="2"
+                                         ButtonContent="Guardar"
+                                         FontSize="12"
+                                         CornerRadius="4"
+                                         Margin="0,20,0,0"/>
+					<userControls:Dropdown
+                                ItemsSource="{Binding Subjects}" 
+                                SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
+                                DisplayMemberPath="Name"
+                                Background="{StaticResource LightBackgroundBrush}"
+                                BorderBrush="#666666"
+                                BorderThickness="2"
+                                Foreground="{StaticResource LightPrimaryBrush}"
+                                FontFamily="{StaticResource NormalFont}"
+                                ArrowBrush="#666666"
+                                DropdownBackground="{StaticResource LightBackgroundBrush}"
+                                DropdownBorderBrush="#CCCCCC" Margin="85,298,95,15" Grid.Row="1"/>
+					<userControls:Dropdown
+                                ItemsSource="{Binding Subjects}" 
+                                SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
+                                DisplayMemberPath="Name"
+                                Background="{StaticResource LightBackgroundBrush}"
+                                BorderBrush="#666666"
+                                BorderThickness="2"
+                                Foreground="{StaticResource LightPrimaryBrush}"
+                                FontFamily="{StaticResource NormalFont}"
+                                ArrowBrush="#666666"
+                                DropdownBackground="{StaticResource LightBackgroundBrush}"
+                                DropdownBorderBrush="#CCCCCC" Margin="90,172,90,142" Grid.Row="1" RenderTransformOrigin="0.491,0.144"/>
+
+					<userControls:Dropdown
+                                ItemsSource="{Binding Subjects}" 
+                                SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
+                                DisplayMemberPath="Name"
+                                Background="{StaticResource LightBackgroundBrush}"
+                                BorderBrush="#666666"
+                                BorderThickness="2"
+                                Foreground="{StaticResource LightPrimaryBrush}"
+                                FontFamily="{StaticResource NormalFont}"
+                                ArrowBrush="#666666"
+                                DropdownBackground="{StaticResource LightBackgroundBrush}"
+                                DropdownBorderBrush="#CCCCCC" Margin="90,57,90,258" Grid.Row="1"/>
+
+
+
+
+
+					<TextBlock
+                            Margin="85,265,0,71"
+                            HorizontalAlignment="Left"
+                            Foreground="{StaticResource LightPrimaryBrush}"
+                            FontSize="16"
+                            FontWeight="Medium"
+                            FontFamily="{StaticResource NormalFont}" Grid.Row="1"><Run Language="es-es" Text="Tipo Persona:"/></TextBlock>
+					<TextBlock
+                            Margin="85,139,0,197"
+                            HorizontalAlignment="Left"
+                            Foreground="{StaticResource LightPrimaryBrush}"
+                            FontSize="16"
+                            FontWeight="Medium"
+                            FontFamily="{StaticResource NormalFont}" Grid.Row="1"><Run Language="es-es" Text="Nombre:"/></TextBlock>
+
+					<TextBlock
+                            Margin="90,28,0,313"
+                            HorizontalAlignment="Left"
+                            Foreground="{StaticResource LightPrimaryBrush}"
+                            FontSize="16"
+                            FontWeight="Medium"
+                            FontFamily="{StaticResource NormalFont}" Grid.Row="1" RenderTransformOrigin="5.679,2.278"><Run Language="es-es" Text="C.I:"/></TextBlock>
+
+
+
+
+
+				</Grid>
+			</Border>
+			<TextBlock Grid.Row="1"
+                Margin="0,10,0,463"
+                HorizontalAlignment="Center"
+                FontFamily="{StaticResource NormalFont}"
+                FontSize="18"
+                FontWeight="Medium"
+                Foreground="{StaticResource LightAccentBrush}"
+                Text="Agregar Persona" />
+		</Grid>
+	</Grid>
+</Page>

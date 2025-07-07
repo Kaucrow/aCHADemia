@@ -23,17 +23,21 @@
     </Page.Resources>
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="14*"/>
+        </Grid.ColumnDefinitions>
         <userControls:BackButton Command="{Binding GoBackCommand}"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
-                               Margin="30"
+                               Margin="30,30,0,0"
                                IconBrush="{StaticResource LightPrimaryBrush}"
                                TextBrush="{StaticResource LightPrimaryBrush}"/>
 
         <StackPanel Orientation="Horizontal" 
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Center">
-            
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="336,0,0,0">
+
             <userControls:NavigationButton
                 Icon="FileText"
                 Text="Planilla de Notas"
@@ -42,7 +46,7 @@
                 IconSize="80"
                 FontSize="16"
                 TextMargin="0,20,0,0"/>
-            
+
         </StackPanel>
     </Grid>
 </Page>
