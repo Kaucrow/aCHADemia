@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:aCHADemia.View.UserControls"
              mc:Ignorable="d"
              Name="root">
 
@@ -17,6 +18,42 @@
             <Setter Property="Margin" Value="8,4"/>
             <Setter Property="TextAlignment" Value="Center"/>
         </Style>
+
+        <Style TargetType="TextBox" x:Key="GridEditStyle">
+            <Setter Property="FontFamily" Value="{Binding FontFamily, ElementName=root}"/>
+            <Setter Property="FontSize" Value="{Binding FontSize, ElementName=root}"/>
+            <Setter Property="Foreground" Value="{Binding FontColor, ElementName=root}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="8,4"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DataTemplate x:Key="TextBlockTemplate">
+            <TextBlock Text="{Binding}" Style="{StaticResource GridTextStyle}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TextBoxTemplate">
+            <TextBox Text="{Binding Path=., Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource GridEditStyle}"
+                     GotFocus="TextBox_GotFocus"/>
+        </DataTemplate>
+
+        <local:IndexConverter x:Key="IndexConverter"/>
     </UserControl.Resources>
 
     <Grid>
@@ -24,7 +61,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <!-- Header -->
         <Border Grid.Row="0" 
                 Background="{Binding HeaderBackground, ElementName=root}"
@@ -40,10 +77,10 @@
                             <UniformGrid Rows="1"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
-                    
+
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                                <TextBlock Text="{Binding}"
+                            <TextBlock Text="{Binding}"
                                            Style="{StaticResource GridTextStyle}"
                                            FontWeight="Bold"
                                            FontSize="14"/>
@@ -65,7 +102,6 @@
                 </Grid.RowDefinitions>
 
                 <!-- Scrollable content area -->
-                <!-- The main ScrollViewer for the rows -->
                 <ScrollViewer Grid.Row="1" 
                               VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Auto"
@@ -92,15 +128,33 @@
                                     <ItemsControl ItemsSource="{Binding}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
-                                                <!-- The UniformGrid for cell content within a row -->
                                                 <UniformGrid Rows="1"/>
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <Border Width="{Binding ColumnWidth, ElementName=root, FallbackValue=120}">
-                                                    <TextBlock Text="{Binding}"
-                                                               Style="{StaticResource GridTextStyle}"/>
+                                                    <ContentControl Content="{Binding}">
+                                                        <ContentControl.Style>
+                                                            <Style TargetType="ContentControl">
+                                                                <Setter Property="ContentTemplate" Value="{StaticResource TextBlockTemplate}"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Value="True">
+                                                                        <DataTrigger.Binding>
+                                                                            <MultiBinding Converter="{StaticResource IndexConverter}">
+                                                                                <Binding RelativeSource="{RelativeSource AncestorType=ItemsControl}" 
+                                                                                       Path="ItemsSource"/>
+                                                                                <Binding RelativeSource="{RelativeSource AncestorType=ContentPresenter}" 
+                                                                                       Path="Content"/>
+                                                                                <Binding ElementName="root" Path="CanEditColumns"/>
+                                                                            </MultiBinding>
+                                                                        </DataTrigger.Binding>
+                                                                        <Setter Property="ContentTemplate" Value="{StaticResource TextBoxTemplate}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </ContentControl.Style>
+                                                    </ContentControl>
                                                 </Border>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>

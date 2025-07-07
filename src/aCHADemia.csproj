@@ -23,4 +23,10 @@
   <ItemGroup>
     <Resource Include="Fonts\Poppins-Regular.ttf" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="View\Pages\GradeRegistrationPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>
