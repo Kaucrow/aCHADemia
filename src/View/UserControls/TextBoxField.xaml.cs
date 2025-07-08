@@ -47,6 +47,7 @@ namespace aCHADemia.View.UserControls
             DropdownBorderBrush = Brushes.LightGray;
         }
 
+        // get the name of the textBox
         public string Text
         {
             get => (string)GetValue(TextProperty);

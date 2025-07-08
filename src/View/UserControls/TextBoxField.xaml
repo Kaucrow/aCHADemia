@@ -62,6 +62,8 @@
         </Style>
     </UserControl.Resources>
 
+    <!--Input Binding-->
+    
     <TextBox x:Name="InternalTextBox"
                Style="{StaticResource InternalTextBoxStyle}"
                Text="{Binding Text, ElementName=root, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

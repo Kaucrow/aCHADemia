@@ -21,9 +21,5 @@ namespace aCHADemia.View.Pages
 
         }
 
-        private void InputField_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-
-        }
     }
 }
