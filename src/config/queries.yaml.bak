@@ -1,0 +1,11 @@
+GradeSheet:
+  GetActiveCourses: |
+    SELECT *
+    FROM curso c
+    INNER JOIN materia m ON c.materia_id = m.materia_id
+    INNER JOIN seccion s ON c.seccion_id = s.seccion_id
+    WHERE
+      c.curso_dt_ini <= CURRENT_DATE AND
+      c.curso_dt_end > CURRENT_DATE AND
+      m.materia_id = @materia_id AND
+      s.seccion_id = @seccion_id

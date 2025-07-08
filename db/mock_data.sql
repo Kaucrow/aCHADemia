@@ -103,19 +103,19 @@ INSERT INTO Curso (
     -- ACTIVE COURSES (15) - Started on or before 05-07-2025, Ends after 05-07-2025
     ('Historia - Verano 2025', 6, 3, TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('30-08-2025', 'DD-MM-YYYY'), 30, '66666666'),
     ('Literatura - Verano 2025', 7, 1, TO_DATE('15-06-2025', 'DD-MM-YYYY'), TO_DATE('30-09-2025', 'DD-MM-YYYY'), 28, '77777777'),
-    ('Arte - Verano 2025', 8, 2, TO_DATE('01-07-2025', 'DD-MM-YYYY'), TO_DATE('15-10-2025', 'DD-MM-YYYY'), 22, '88888888'),
-    ('Musica - Otoño 2025', 9, 3, TO_DATE('01-09-2025', 'DD-MM-YYYY'), TO_DATE('15-12-2025', 'DD-MM-YYYY'), 18, '99999999'),
-    ('Educacion Fisica - Otoño 2025', 10, 1, TO_DATE('01-09-2025', 'DD-MM-YYYY'), TO_DATE('15-12-2025', 'DD-MM-YYYY'), 30, '10101010'),
-    ('Matematica - Otoño 2025', 1, 2, TO_DATE('01-09-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 28, '11111111'),
-    ('Fisica - Otoño 2025', 2, 3, TO_DATE('01-09-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 20, '22222222'),
-    ('Quimica - Otoño 2025', 3, 1, TO_DATE('01-09-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 25, '33333333'),
-    ('Biologia - Otoño 2025', 4, 2, TO_DATE('01-09-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 30, '44444444'),
-    ('Computacion - Otoño 2025', 5, 3, TO_DATE('01-09-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 35, '55555555'),
-    ('Historia - Otoño 2025', 6, 1, TO_DATE('01-09-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 25, '66666666'),
-    ('Literatura - Otoño 2025', 7, 2, TO_DATE('01-09-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 20, '77777777'),
-    ('Escultura - Otoño 2025', 8, 3, TO_DATE('01-09-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 15, '88888888'),
-    ('Musica - Otoño 2025', 9, 1, TO_DATE('01-09-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 22, '99999999'),
-    ('Educacion Fisica - Otoño 2025', 10, 2, TO_DATE('01-09-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 30, '10101010');
+    ('Arte - Verano 2025', 8, 2, TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('15-10-2025', 'DD-MM-YYYY'), 22, '88888888'),
+    ('Musica - Otoño 2025', 9, 3, TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('15-12-2025', 'DD-MM-YYYY'), 18, '99999999'),
+    ('Educacion Fisica - Otoño 2025', 10, 1, TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('15-12-2025', 'DD-MM-YYYY'), 30, '10101010'),
+    ('Matematica - Otoño 2025', 1, 2, TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 28, '11111111'),
+    ('Fisica - Otoño 2025', 2, 3, TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 20, '22222222'),
+    ('Quimica - Otoño 2025', 3, 1, TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 25, '33333333'),
+    ('Biologia - Otoño 2025', 4, 2, TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 30, '44444444'),
+    ('Computacion - Otoño 2025', 5, 3, TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 35, '55555555'),
+    ('Historia - Otoño 2025', 6, 1, TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 25, '66666666'),
+    ('Literatura - Otoño 2025', 7, 2, TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 20, '77777777'),
+    ('Escultura - Otoño 2025', 8, 3, TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 15, '88888888'),
+    ('Musica - Otoño 2025', 9, 1, TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 22, '99999999'),
+    ('Educacion Fisica - Otoño 2025', 10, 2, TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('20-12-2025', 'DD-MM-YYYY'), 30, '10101010');
 
 -- Every student is enrolled in an active course
 INSERT INTO Inscripcion (curso_id, alumno_ci, inscripcion_dt)

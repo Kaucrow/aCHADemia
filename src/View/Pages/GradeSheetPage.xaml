@@ -80,8 +80,8 @@
 
                             <userControls:Dropdown 
                                 Width="200"
-                                ItemsSource="{Binding Subjects}" 
-                                SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
+                                ItemsSource="{Binding Courses}" 
+                                SelectedItem="{Binding SelectedCourse, Mode=TwoWay}"
                                 DisplayMemberPath="Name"
                                 Background="{StaticResource LightBackgroundBrush}"
                                 BorderBrush="#666666"
@@ -107,8 +107,8 @@
 
                             <userControls:Dropdown 
                                 Width="200"
-                                ItemsSource="{Binding Subjects}" 
-                                SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
+                                ItemsSource="{Binding Sections}" 
+                                SelectedItem="{Binding SelectedSection, Mode=TwoWay}"
                                 DisplayMemberPath="Name"
                                 Background="{StaticResource LightBackgroundBrush}"
                                 BorderBrush="#666666"
@@ -124,7 +124,7 @@
                     <!-- Data grid -->
                     <userControls:DataGrid Grid.Row="1"
                             ColumnHeaders="{Binding ColumnHeaders}"
-                            Rows="{Binding Rows}"
+                            Rows="{Binding StudentRows, Mode=TwoWay}"
                             BorderColor="{StaticResource LightAccentBrush}"
                             BorderThickness="2"
                             BorderRadius="6"

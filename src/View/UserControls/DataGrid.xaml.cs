@@ -1,4 +1,5 @@
 ﻿using DependencyPropertyGenerator;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,7 +9,7 @@ using System.Windows.Media;
 namespace aCHADemia.View.UserControls
 {
     [DependencyProperty<List<string>>("ColumnHeaders")]
-    [DependencyProperty<List<List<string>>>("Rows")]
+    [DependencyProperty<ObservableCollection<ObservableCollection<string>>>("Rows")]
     [DependencyProperty<bool[]>("CanEditColumns")]
     [DependencyProperty<double>("ColumnWidth", DefaultValue = 120.0)]
     [DependencyProperty<double>("FontSize", DefaultValue = 12.0)]

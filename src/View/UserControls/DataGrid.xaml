@@ -15,8 +15,15 @@
             <Setter Property="Foreground" Value="{Binding FontColor, ElementName=root}"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="8,4"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
             <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+        
+        <Style TargetType="TextBlock" x:Key="HeaderTextStyle" BasedOn="{StaticResource GridTextStyle}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
         </Style>
 
         <Style TargetType="TextBox" x:Key="GridEditStyle">
@@ -25,7 +32,7 @@
             <Setter Property="Foreground" Value="{Binding FontColor, ElementName=root}"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="8,4"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -41,6 +48,11 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding FontWeight}" Value="Bold">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
         <DataTemplate x:Key="TextBlockTemplate">
@@ -66,7 +78,18 @@
         <Border Grid.Row="0" 
                 Background="{Binding HeaderBackground, ElementName=root}"
                 Padding="0,8"
-                Margin="0,0,17,0">
+                Margin="0">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ComputedHorizontalScrollBarVisibility, ElementName=ContentScrollViewer}" 
+                             Value="Visible">
+                            <Setter Property="Margin" Value="0,0,17,0"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            
             <ScrollViewer x:Name="HeaderScrollViewer"
                           HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Disabled"
@@ -81,9 +104,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding}"
-                                           Style="{StaticResource GridTextStyle}"
-                                           FontWeight="Bold"
-                                           FontSize="14"/>
+                                           Style="{StaticResource HeaderTextStyle}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -91,7 +112,7 @@
         </Border>
 
         <Border Grid.Row="1"
-                BorderBrush="{Binding BorderColor, ElementName=root, FallbackValue=LightGray}"
+                BorderBrush="{Binding BorderColor, ElementName=root}"
                 BorderThickness="{Binding BorderThickness, ElementName=root}"
                 CornerRadius="{Binding BorderRadius, ElementName=root}"
                 ClipToBounds="True">
@@ -124,7 +145,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border BorderThickness="0,0,0,1"
-                                        BorderBrush="{Binding RowBorderColor, ElementName=root, FallbackValue=LightGray}">
+                                        BorderBrush="{Binding RowBorderColor, ElementName=root}">
                                     <ItemsControl ItemsSource="{Binding}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
