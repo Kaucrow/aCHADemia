@@ -13,7 +13,7 @@ using System.Windows.Media;
 namespace aCHADemia.View.UserControls
 {
     [DependencyProperty<List<string>>("ColumnHeaders")]
-    [DependencyProperty<IList<ObservableCollection<string>>>("SelectedRows")]
+    [DependencyProperty<IList>("Rows")]
     [DependencyProperty<bool[]>("CanEditColumns")]
     [DependencyProperty<double>("ColumnWidth", DefaultValue = 120.0)]
     [DependencyProperty<double>("FontSize", DefaultValue = 12.0)]
@@ -27,22 +27,6 @@ namespace aCHADemia.View.UserControls
     [DependencyProperty<FontFamily>("FontFamily")]
     public partial class DataGrid : UserControl
     {
-        public static readonly DependencyProperty RowsProperty =
-    DependencyProperty.Register(
-        nameof(Rows),
-        typeof(IList), // Explicitly set the DP type
-        typeof(DataGrid),
-        new PropertyMetadata(
-            new ObservableCollection<IDataGridRow>()
-        )
-    );
-
-        public IList Rows
-        {
-            get => (IList)GetValue(RowsProperty);
-            set => SetValue(RowsProperty, value);
-        }
-
         public DataGrid()
         {
             InitializeComponent();
@@ -87,10 +71,10 @@ namespace aCHADemia.View.UserControls
 
     public class IndexConverter : IMultiValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             if (values.Length == 3 &&
-                values[0] is System.Collections.IEnumerable itemsSource &&
+                values[0] is IEnumerable itemsSource &&
                 values[1] is object currentItem &&
                 values[2] is bool[] canEditColumns)
             {

@@ -29,9 +29,6 @@ namespace aCHADemia.ViewModel
         [ObservableProperty]
         private ObservableCollection<SelectableDataGridRow> _studentRows = [];
 
-        [ObservableProperty]
-        private IList<ObservableCollection<string>> _selectedStudentRows = [];
-
         public GradeSheetViewModel()
         {
         }

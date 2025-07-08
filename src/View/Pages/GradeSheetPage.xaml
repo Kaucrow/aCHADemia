@@ -125,7 +125,6 @@
                     <userControls:DataGrid Grid.Row="1"
                             ColumnHeaders="{Binding ColumnHeaders}"
                             Rows="{Binding StudentRows, Mode=TwoWay}"
-                            SelectedRows="{Binding SelectedStudentRows}"
                             BorderColor="{StaticResource LightAccentBrush}"
                             BorderThickness="2"
                             BorderRadius="6"
