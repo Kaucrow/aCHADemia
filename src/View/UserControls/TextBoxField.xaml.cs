@@ -20,9 +20,18 @@ namespace aCHADemia.View.UserControls
     [DependencyProperty<Brush>("ArrowBrush")]
     [DependencyProperty<Brush>("DropdownBackground")]
     [DependencyProperty<Brush>("DropdownBorderBrush")]
-    public partial class Dropdown : UserControl
+    public partial class TextBoxField : UserControl
     {
-        public Dropdown()
+
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register(
+                nameof(Text),
+                typeof(string),
+                typeof(TextBoxField),
+                new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault)
+            );
+
+        public TextBoxField()
         {
             InitializeComponent();
 
@@ -37,5 +46,12 @@ namespace aCHADemia.View.UserControls
             DropdownBackground = (Brush)App.Current.FindResource("LightBackgroundBrush");
             DropdownBorderBrush = Brushes.LightGray;
         }
+
+        public string Text
+        {
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
+        }
+
     }
 }

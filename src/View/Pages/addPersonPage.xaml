@@ -34,7 +34,7 @@
 
 			<!--  Title  -->
 			<Border Grid.Row="1"
-                Width="565"
+                Width="517"
                 Height="500"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -66,11 +66,12 @@
 					</Grid>
 
 					<!--  Get Report Button  -->
+                    
 					<userControls:Button Grid.Row="2"
                                          ButtonContent="Guardar"
                                          FontSize="12"
                                          CornerRadius="4"
-                                         Margin="0,20,0,0"/>
+                                         Margin="0,20,0,0" Height="40"/>
 					<userControls:Dropdown
                                 ItemsSource="{Binding Subjects}" 
                                 SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
@@ -82,8 +83,8 @@
                                 FontFamily="{StaticResource NormalFont}"
                                 ArrowBrush="#666666"
                                 DropdownBackground="{StaticResource LightBackgroundBrush}"
-                                DropdownBorderBrush="#CCCCCC" Margin="85,298,95,15" Grid.Row="1"/>
-					<userControls:Dropdown
+                                DropdownBorderBrush="#CCCCCC" Margin="85,298,95,15" Grid.Row="1" Loaded="InputField_Loaded"/>
+					<userControls:TextBoxField
                                 ItemsSource="{Binding Subjects}" 
                                 SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
                                 DisplayMemberPath="Name"
@@ -96,7 +97,7 @@
                                 DropdownBackground="{StaticResource LightBackgroundBrush}"
                                 DropdownBorderBrush="#CCCCCC" Margin="90,172,90,142" Grid.Row="1" RenderTransformOrigin="0.491,0.144"/>
 
-					<userControls:Dropdown
+					<userControls:TextBoxField
                                 ItemsSource="{Binding Subjects}" 
                                 SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
                                 DisplayMemberPath="Name"
@@ -108,10 +109,6 @@
                                 ArrowBrush="#666666"
                                 DropdownBackground="{StaticResource LightBackgroundBrush}"
                                 DropdownBorderBrush="#CCCCCC" Margin="90,57,90,258" Grid.Row="1"/>
-
-
-
-
 
 					<TextBlock
                             Margin="85,265,0,71"
@@ -136,7 +133,7 @@
                             FontWeight="Medium"
                             FontFamily="{StaticResource NormalFont}" Grid.Row="1" RenderTransformOrigin="5.679,2.278"><Run Language="es-es" Text="C.I:"/></TextBlock>
 
-
+                    
 
 
 
@@ -150,6 +147,7 @@
                 FontWeight="Medium"
                 Foreground="{StaticResource LightAccentBrush}"
                 Text="Agregar Persona" />
+            
 		</Grid>
 	</Grid>
 </Page>
