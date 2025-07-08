@@ -66,6 +66,8 @@
         </DataTemplate>
 
         <local:IndexConverter x:Key="IndexConverter"/>
+
+        <local:IsSelectableToVisibilityConverter x:Key="IsSelectableToVisibilityConverter"/>
     </UserControl.Resources>
 
     <Grid>
@@ -104,7 +106,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding}"
-                                           Style="{StaticResource HeaderTextStyle}"/>
+                                       Style="{StaticResource HeaderTextStyle}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -146,40 +148,58 @@
                             <DataTemplate>
                                 <Border BorderThickness="0,0,0,1"
                                         BorderBrush="{Binding RowBorderColor, ElementName=root}">
-                                    <ItemsControl ItemsSource="{Binding}">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <UniformGrid Rows="1"/>
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border Width="{Binding ColumnWidth, ElementName=root, FallbackValue=120}">
-                                                    <ContentControl Content="{Binding}">
-                                                        <ContentControl.Style>
-                                                            <Style TargetType="ContentControl">
-                                                                <Setter Property="ContentTemplate" Value="{StaticResource TextBlockTemplate}"/>
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Value="True">
-                                                                        <DataTrigger.Binding>
-                                                                            <MultiBinding Converter="{StaticResource IndexConverter}">
-                                                                                <Binding RelativeSource="{RelativeSource AncestorType=ItemsControl}" 
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <CheckBox Grid.Column="0"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center"
+                      Margin="5,0,5,0"
+                      Visibility="{Binding 
+                          RelativeSource={RelativeSource AncestorType=ContentPresenter},
+                          Converter={StaticResource IsSelectableToVisibilityConverter}}"
+                      IsChecked="{Binding 
+                          RelativeSource={RelativeSource AncestorType=ContentPresenter},
+                          Path=Content.IsSelected,
+                          Mode=TwoWay}"/>
+                                        
+                                        <ItemsControl Grid.Column="1" ItemsSource="{Binding Values}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <UniformGrid Rows="1" Columns="{Binding ColumnCount}"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Width="{Binding ColumnWidth, ElementName=root, FallbackValue=120}">
+                                                        <ContentControl Content="{Binding}">
+                                                            <ContentControl.Style>
+                                                                <Style TargetType="ContentControl">
+                                                                    <Setter Property="ContentTemplate" Value="{StaticResource TextBlockTemplate}"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Value="True">
+                                                                            <DataTrigger.Binding>
+                                                                                <MultiBinding Converter="{StaticResource IndexConverter}">
+                                                                                    <Binding RelativeSource="{RelativeSource AncestorType=ItemsControl}" 
                                                                                        Path="ItemsSource"/>
-                                                                                <Binding RelativeSource="{RelativeSource AncestorType=ContentPresenter}" 
-                                                                                       Path="Content"/>
-                                                                                <Binding ElementName="root" Path="CanEditColumns"/>
-                                                                            </MultiBinding>
-                                                                        </DataTrigger.Binding>
-                                                                        <Setter Property="ContentTemplate" Value="{StaticResource TextBoxTemplate}"/>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </ContentControl.Style>
-                                                    </ContentControl>
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
+                                                                                    <Binding Path="."/>
+                                                                                    <Binding ElementName="root" Path="CanEditColumns"/>
+                                                                                </MultiBinding>
+                                                                            </DataTrigger.Binding>
+                                                                            <Setter Property="ContentTemplate" Value="{StaticResource TextBoxTemplate}"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ContentControl.Style>
+                                                        </ContentControl>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Grid>
                                 </Border>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

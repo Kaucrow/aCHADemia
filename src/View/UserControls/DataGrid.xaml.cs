@@ -1,5 +1,9 @@
-﻿using DependencyPropertyGenerator;
+﻿using aCHADemia.Core.Interfaces;
+using DependencyPropertyGenerator;
+using System.Collections;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -9,7 +13,7 @@ using System.Windows.Media;
 namespace aCHADemia.View.UserControls
 {
     [DependencyProperty<List<string>>("ColumnHeaders")]
-    [DependencyProperty<ObservableCollection<ObservableCollection<string>>>("Rows")]
+    [DependencyProperty<IList<ObservableCollection<string>>>("SelectedRows")]
     [DependencyProperty<bool[]>("CanEditColumns")]
     [DependencyProperty<double>("ColumnWidth", DefaultValue = 120.0)]
     [DependencyProperty<double>("FontSize", DefaultValue = 12.0)]
@@ -23,6 +27,22 @@ namespace aCHADemia.View.UserControls
     [DependencyProperty<FontFamily>("FontFamily")]
     public partial class DataGrid : UserControl
     {
+        public static readonly DependencyProperty RowsProperty =
+    DependencyProperty.Register(
+        nameof(Rows),
+        typeof(IList), // Explicitly set the DP type
+        typeof(DataGrid),
+        new PropertyMetadata(
+            new ObservableCollection<IDataGridRow>()
+        )
+    );
+
+        public IList Rows
+        {
+            get => (IList)GetValue(RowsProperty);
+            set => SetValue(RowsProperty, value);
+        }
+
         public DataGrid()
         {
             InitializeComponent();
@@ -88,6 +108,20 @@ namespace aCHADemia.View.UserControls
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class IsSelectableToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value is ContentPresenter presenter && presenter.Content is ISelectableRow?
+                Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

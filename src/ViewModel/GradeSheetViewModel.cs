@@ -1,4 +1,5 @@
 ﻿using aCHADemia.Core.DBComponent;
+using aCHADemia.Core.Classes;
 using aCHADemia.Model;
 using aCHADemia.MVVM;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -26,15 +27,13 @@ namespace aCHADemia.ViewModel
         public List<string> ColumnHeaders { get; } = ["Alumno", "C.I.", "Calificación"];
 
         [ObservableProperty]
-        private ObservableCollection<ObservableCollection<string>> _studentRows = new ObservableCollection<ObservableCollection<string>>();
+        private ObservableCollection<SelectableDataGridRow> _studentRows = [];
+
+        [ObservableProperty]
+        private IList<ObservableCollection<string>> _selectedStudentRows = [];
 
         public GradeSheetViewModel()
         {
-        }
-
-        partial void OnStudentRowsChanged(ObservableCollection<ObservableCollection<string>> value)
-        {
-            Debug.WriteLine("StudentRows changed!");
         }
 
         async partial void OnSelectedCourseChanged(Course? value)
@@ -90,7 +89,8 @@ namespace aCHADemia.ViewModel
                         var ci = reader.GetInt32(reader.GetOrdinal("ci"));
                         var grade = reader.GetFloat(reader.GetOrdinal("grade"));
 
-                        StudentRows.Add(new ObservableCollection<string> { name, ci.ToString(), grade.ToString() });
+                        var row = new SelectableDataGridRow(name, ci.ToString(), grade.ToString());
+                        StudentRows.Add(row);
                     }
                 }
             }
