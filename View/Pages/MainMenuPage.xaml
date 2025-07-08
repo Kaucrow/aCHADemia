@@ -1,0 +1,59 @@
+﻿<Page x:Class="aCHADemia.View.Pages.MainMenuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:vm="clr-namespace:aCHADemia.ViewModel"
+      xmlns:local="clr-namespace:aCHADemia.View.Pages"
+      xmlns:userControls="clr-namespace:aCHADemia.View.UserControls"
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      d:DataContext="{d:DesignInstance Type=vm:MainMenuViewModel, IsDesignTimeCreatable=True}"
+      Title="MainMenuPage"
+      Background="{StaticResource LightBackgroundBrush}">
+    
+    <Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <userControls:NavigationButton
+                Icon="FileText"
+                Text="Notas"
+                Command="{Binding NavigateToGradeRegistrationCommand}"
+                Brush="{StaticResource LightPrimaryBrush}"
+                IconSize="80"
+                FontSize="16"
+                Margin="0,0,60,0"
+                TextMargin="0,20,0,0"/>
+
+            <userControls:NavigationButton
+                Icon="User"
+                Text="Inscripción"
+                Brush="{StaticResource LightPrimaryBrush}"
+                IconSize="80"
+                FontSize="16"
+                Margin="0,0,60,0"
+                TextMargin="0,20,0,0"/>
+            
+            <userControls:NavigationButton
+                Icon="Pencil"
+                Text="Mantenimiento"
+                Command="{Binding OpenMaintenanceCommand}"
+                Brush="{StaticResource LightPrimaryBrush}"
+                IconSize="80"
+                FontSize="16"
+                Margin="0,0,60,0"
+                TextMargin="0,20,0,0"/>
+            
+             <userControls:NavigationButton
+                Icon="Inbox"
+                Text="Reportes"
+                Command="{Binding NavigateToReportsCommand}"
+                Brush="{StaticResource LightPrimaryBrush}"
+                IconSize="80"
+                FontSize="16"
+                Margin="0"
+                TextMargin="0,20,0,0"/>
+           
+        </StackPanel>
+    </Grid>
+</Page>

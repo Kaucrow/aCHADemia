@@ -1,0 +1,213 @@
+﻿<UserControl x:Class="aCHADemia.View.UserControls.DataGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:local="clr-namespace:aCHADemia.View.UserControls"
+             mc:Ignorable="d"
+             Name="root">
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" x:Key="GridTextStyle">
+            <Setter Property="FontFamily" Value="{Binding FontFamily, ElementName=root}"/>
+            <Setter Property="FontSize" Value="{Binding FontSize, ElementName=root}"/>
+            <Setter Property="Foreground" Value="{Binding FontColor, ElementName=root}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+        
+        <Style TargetType="TextBlock" x:Key="HeaderTextStyle" BasedOn="{StaticResource GridTextStyle}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="GridEditStyle">
+            <Setter Property="FontFamily" Value="{Binding FontFamily, ElementName=root}"/>
+            <Setter Property="FontSize" Value="{Binding FontSize, ElementName=root}"/>
+            <Setter Property="Foreground" Value="{Binding FontColor, ElementName=root}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding FontWeight}" Value="Bold">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <DataTemplate x:Key="TextBlockTemplate">
+            <TextBlock Text="{Binding}" Style="{StaticResource GridTextStyle}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TextBoxTemplate">
+            <TextBox Text="{Binding Path=., Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource GridEditStyle}"
+                     GotFocus="TextBox_GotFocus"/>
+        </DataTemplate>
+
+        <local:IndexConverter x:Key="IndexConverter"/>
+
+        <local:IsSelectableToVisibilityConverter x:Key="IsSelectableToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" 
+                Background="{Binding HeaderBackground, ElementName=root}"
+                Padding="0,8"
+                Margin="0">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ComputedHorizontalScrollBarVisibility, ElementName=ContentScrollViewer}" 
+                             Value="Visible">
+                            <Setter Property="Margin" Value="0,0,17,0"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            
+            <ScrollViewer x:Name="HeaderScrollViewer"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Disabled"
+                          Padding="0">
+                <ItemsControl ItemsSource="{Binding ColumnHeaders, ElementName=root}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="1"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}"
+                                       Style="{StaticResource HeaderTextStyle}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <Border Grid.Row="1"
+                BorderBrush="{Binding BorderColor, ElementName=root}"
+                BorderThickness="{Binding BorderThickness, ElementName=root}"
+                CornerRadius="{Binding BorderRadius, ElementName=root}"
+                ClipToBounds="True">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Scrollable content area -->
+                <ScrollViewer Grid.Row="1" 
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Auto"
+                              CanContentScroll="True"
+                              x:Name="ContentScrollViewer"
+                              PreviewMouseWheel="ContentScrollViewer_PreviewMouseWheel"
+                              ClipToBounds="True"
+                              Margin="0,10,0,10">
+                    <ItemsControl ItemsSource="{Binding Rows, ElementName=root}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Focusable" Value="False"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderThickness="0,0,0,1"
+                                        BorderBrush="{Binding RowBorderColor, ElementName=root}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <!-- Row CheckBox -->
+                                        <CheckBox Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Center"
+                                            Margin="5,0,5,0"
+                                            Visibility="{Binding 
+                                                         RelativeSource={RelativeSource AncestorType=ContentPresenter},
+                                                         Converter={StaticResource IsSelectableToVisibilityConverter}}"
+                                            IsChecked="{Binding 
+                                                        RelativeSource={RelativeSource AncestorType=ContentPresenter},
+                                                        Path=Content.IsSelected,
+                                                        Mode=TwoWay}"/>
+                                        
+                                        <!-- Row Content -->
+                                        <ItemsControl Grid.Column="1" ItemsSource="{Binding Values}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <UniformGrid Rows="1" Columns="{Binding ColumnCount}"/>
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Width="{Binding ColumnWidth, ElementName=root, FallbackValue=120}">
+                                                        <ContentControl Content="{Binding}">
+                                                            <ContentControl.Style>
+                                                                <Style TargetType="ContentControl">
+                                                                    <Setter Property="ContentTemplate" Value="{StaticResource TextBlockTemplate}"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Value="True">
+                                                                            <DataTrigger.Binding>
+                                                                                <MultiBinding Converter="{StaticResource IndexConverter}">
+                                                                                    <Binding RelativeSource="{RelativeSource AncestorType=ItemsControl}" 
+                                                                                       Path="ItemsSource"/>
+                                                                                    <Binding Path="."/>
+                                                                                    <Binding ElementName="root" Path="CanEditColumns"/>
+                                                                                </MultiBinding>
+                                                                            </DataTrigger.Binding>
+                                                                            <Setter Property="ContentTemplate" Value="{StaticResource TextBoxTemplate}"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </ContentControl.Style>
+                                                        </ContentControl>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
