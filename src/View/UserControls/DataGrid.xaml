@@ -60,11 +60,14 @@
         </DataTemplate>
 
         <DataTemplate x:Key="TextBoxTemplate">
-            <TextBox Text="{Binding Path=., Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                     Style="{StaticResource GridEditStyle}"
-                     GotFocus="TextBox_GotFocus"/>
+            <TextBox Text="{Binding Path=.,
+                     Mode=TwoWay,
+                     UpdateSourceTrigger=PropertyChanged}"
+             Style="{StaticResource GridEditStyle}"
+             TextChanged="TextBox_TextChanged"
+             Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ItemsControl}}, Path=DataContext}"/>
         </DataTemplate>
-
+        
         <local:IndexConverter x:Key="IndexConverter"/>
 
         <local:IsSelectableToVisibilityConverter x:Key="IsSelectableToVisibilityConverter"/>

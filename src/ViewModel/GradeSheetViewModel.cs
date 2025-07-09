@@ -27,7 +27,7 @@ namespace aCHADemia.ViewModel
         public List<string> ColumnHeaders { get; } = ["Alumno", "C.I.", "Calificación"];
 
         [ObservableProperty]
-        private ObservableCollection<SelectableDataGridRow> _studentRows = [];
+        private ObservableCollection<DataGridRow> _studentRows = [];
 
         public GradeSheetViewModel()
         {
@@ -42,8 +42,8 @@ namespace aCHADemia.ViewModel
             {
                 using (DbDataReader reader = await App.Db?.Fetch(
                     DbType.Postgres,
-                    Config.Queries.GradeSheet.GetCourseSections,
-                    new NpgsqlParameter("@materia_id", SelectedCourse?.SubjectId)
+                    Config.Queries.Section.GetByCourse,
+                    new NpgsqlParameter("@subject_id", SelectedCourse?.SubjectId)
                 ))
                 {
                     while (await reader.ReadAsync())
@@ -75,9 +75,9 @@ namespace aCHADemia.ViewModel
             {
                 using (DbDataReader reader = await App.Db?.Fetch(
                     DbType.Postgres,
-                    Config.Queries.GradeSheet.GetCourseStudents,
-                    new NpgsqlParameter("@materia_id", SelectedCourse?.SubjectId),
-                    new NpgsqlParameter("@seccion_id", SelectedSection?.Id)
+                    Config.Queries.Student.GetByCourseSection,
+                    new NpgsqlParameter("@subject_id", SelectedCourse?.SubjectId),
+                    new NpgsqlParameter("@section_id", SelectedSection?.Id)
                 ))
                 {
                     while (await reader.ReadAsync())
@@ -86,7 +86,7 @@ namespace aCHADemia.ViewModel
                         var ci = reader.GetInt32(reader.GetOrdinal("ci"));
                         var grade = reader.GetFloat(reader.GetOrdinal("grade"));
 
-                        var row = new SelectableDataGridRow(name, ci.ToString(), grade.ToString());
+                        var row = new DataGridRow(name, ci.ToString(), grade.ToString());
                         StudentRows.Add(row);
                     }
                 }
@@ -103,7 +103,7 @@ namespace aCHADemia.ViewModel
             {
                 using (DbDataReader reader = await App.Db?.Fetch(
                     DbType.Postgres,
-                    Config.Queries.GradeSheet.GetActiveCourses
+                    Config.Queries.Course.GetActive
                 ))
                 {
                     while (await reader.ReadAsync())

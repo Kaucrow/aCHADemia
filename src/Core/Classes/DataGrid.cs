@@ -1,8 +1,6 @@
 ﻿using aCHADemia.Core.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
-using DependencyPropertyGenerator;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace aCHADemia.Core.Classes
 {
@@ -10,15 +8,30 @@ namespace aCHADemia.Core.Classes
     {
         public ObservableCollection<string> Values { get; set; } = [];
 
+        public bool IsModified { get; set; }
+
         public DataGridRow(params object[] values)
         {
             foreach (var value in values)
             {
                 Values.Add(value?.ToString() ?? string.Empty);
             }
+
+            Values.CollectionChanged += (s, e) => IsModified = true;
         }
 
-        public object this[int index] => Values[index];
+        public object this[int index]
+        {
+            get => Values[index];
+            set
+            {
+                if (Values[index] != value?.ToString())
+                {
+                    Values[index] = value?.ToString() ?? "";
+                    IsModified = true;
+                }
+            }
+        }
 
         public int ColumnCount => Values.Count;
     }

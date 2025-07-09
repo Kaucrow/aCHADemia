@@ -1,7 +1,6 @@
 ﻿using aCHADemia.Core.Interfaces;
 using DependencyPropertyGenerator;
 using System.Collections;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
@@ -43,13 +42,13 @@ namespace aCHADemia.View.UserControls
         {
             ScrollViewer scv = (ScrollViewer)sender;
             double scrollDelta = e.Delta;
-            
+
             // Higher = slower scroll
             double speedFactor = 4.0;
             double scrollDistance = scrollDelta / speedFactor;
 
             double newOffset;
-            
+
             newOffset = scv.VerticalOffset - scrollDistance;
 
             // Clamp the new offset within valid bounds
@@ -65,6 +64,21 @@ namespace aCHADemia.View.UserControls
             if (sender is TextBox textBox)
             {
                 textBox.SelectAll();
+            }
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox &&
+                textBox.Tag is Core.Classes.DataGridRow row &&
+                textBox.DataContext is string currentValue)
+            {
+                // Find index of the modified value
+                int index = row.Values.IndexOf(currentValue);
+                if (index >= 0)
+                {
+                    row[index] = textBox.Text; // Updates value and sets IsModified
+                }
             }
         }
     }
@@ -101,7 +115,7 @@ namespace aCHADemia.View.UserControls
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is ContentPresenter presenter && presenter.Content is ISelectableRow?
+            return value is ContentPresenter presenter && presenter.Content is ISelectableRow ?
                 Visibility.Visible : Visibility.Collapsed;
         }
 

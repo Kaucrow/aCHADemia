@@ -67,7 +67,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <!-- Subject dropdown -->
+                        <!-- Course dropdown -->
                         <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,15,0">
                             <TextBlock
                             Margin="0,0,0,10"
@@ -81,8 +81,8 @@
 
                             <userControls:Dropdown 
                                 Width="200"
-                                ItemsSource="{Binding Subjects}" 
-                                SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
+                                ItemsSource="{Binding Courses}"
+                                SelectedItem="{Binding SelectedCourse, Mode=TwoWay}"
                                 DisplayMemberPath="Name"
                                 Background="{StaticResource LightBackgroundBrush}"
                                 BorderBrush="#666666"
@@ -108,8 +108,8 @@
 
                             <userControls:Dropdown 
                                 Width="200"
-                                ItemsSource="{Binding Subjects}" 
-                                SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
+                                ItemsSource="{Binding Sections}"
+                                SelectedItem="{Binding SelectedSection, Mode=TwoWay}"
                                 DisplayMemberPath="Name"
                                 Background="{StaticResource LightBackgroundBrush}"
                                 BorderBrush="#666666"
@@ -125,7 +125,7 @@
                     <!-- Data grid -->
                     <userControls:DataGrid Grid.Row="1"
                             ColumnHeaders="{Binding ColumnHeaders}"
-                            Rows="{Binding Rows}"
+                            Rows="{Binding StudentRows}"
                             CanEditColumns="{ext:BoolArray 'false,false,true'}"
                             BorderColor="{StaticResource LightAccentBrush}"
                             BorderThickness="2"
@@ -136,6 +136,7 @@
 
                     <!--  Get Report Button  -->
                     <userControls:Button Grid.Row="2"
+                                         Command="{Binding SaveCommand}"
                                          ButtonContent="Guardar"
                                          Width="100"
                                          FontSize="12"

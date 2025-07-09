@@ -14,6 +14,7 @@ namespace aCHADemia.View.Pages
 
             GradeRegistrationViewModel vm = new GradeRegistrationViewModel();
             DataContext = vm;
+            Loaded += async (s, e) => await vm.InitializeAsync();
         }
     }
 }

@@ -234,7 +234,6 @@ namespace aCHADemia.Core.DBComponent
             if (dbType == DbType.Postgres)
             {
                 var conn = new NpgsqlConnection(connectionString);
-                Debug.WriteLine("!! Here: " + connectionString);
                 await conn.OpenAsync();
                 return new Connection(conn);
             }
