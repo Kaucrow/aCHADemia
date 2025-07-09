@@ -1,5 +1,5 @@
 <Page
-  x:Class="aCHADemia.View.Pages.addPersonPage"
+  x:Class="aCHADemia.View.Pages.AddPersonPage"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,11 +7,11 @@
   xmlns:local="clr-namespace:aCHADemia"
   xmlns:userControls="clr-namespace:aCHADemia.View.UserControls"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  Title="addPersonPage"
+  Title="AddPersonPage"
   mc:Ignorable="d"
   d:DesignHeight="768"
   d:DesignWidth="1366"
-  d:DataContext="{d:DesignInstance Type=vm:addPersonPageViewModel, IsDesignTimeCreatable=True}"
+  d:DataContext="{d:DesignInstance Type=vm:AddPersonPageViewModel, IsDesignTimeCreatable=True}"
   Background="{StaticResource LightBackgroundBrush}">
 
     <Grid>
@@ -73,9 +73,9 @@
                                          CornerRadius="4"
                                          Margin="0,20,0,0" Height="40"/>
                     <userControls:Dropdown
-                                ItemsSource="{Binding Subjects}" 
-                                SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
-                                DisplayMemberPath="Name"
+                                ItemsSource="{Binding PersonTypes}"
+                                SelectedItem="{Binding SelectedPersonType, Mode=TwoWay}"
+                                DisplayMemberPath="."
                                 Background="{StaticResource LightBackgroundBrush}"
                                 BorderBrush="#666666"
                                 BorderThickness="2"
@@ -85,8 +85,6 @@
                                 DropdownBackground="{StaticResource LightBackgroundBrush}"
                                 DropdownBorderBrush="#CCCCCC" Margin="85,298,95,15" Grid.Row="1" Loaded="InputField_Loaded"/>
                     <userControls:TextBoxField
-                                ItemsSource="{Binding Subjects}" 
-                                SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
                                 DisplayMemberPath="Name"
                         
                         
@@ -105,8 +103,6 @@
                                 DropdownBorderBrush="#CCCCCC" Margin="90,172,90,142" Grid.Row="1" RenderTransformOrigin="0.491,0.144"/>
 
                     <userControls:TextBoxField
-                                ItemsSource="{Binding Subjects}" 
-                                SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
                                 DisplayMemberPath="Name"
                         
                         

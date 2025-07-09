@@ -8,7 +8,7 @@ namespace aCHADemia.ViewModel
     {
         public MaintanceViewModel()
         {
-            NavigateToAddPersonCommand = new RelayCommand(execute => NavigateTo<addPersonPage>());
+            NavigateToAddPersonCommand = new RelayCommand(execute => NavigateTo<AddPersonPage>());
         }
 
         public RelayCommand NavigateToAddPersonCommand { get; }
