@@ -48,3 +48,7 @@ Grade:
      INSERT INTO calificacion (inscripcion_id, calificacion_am)
      SELECT i.inscripcion_id, @grade
      FROM inscripcion_info i
+AddPerson:
+  InsertPerson: |
+    INSERT INTO persona (persona_ci, tipo_persona_id, persona_nom)
+    VALUES (@ci, @person_type_id, @name)
