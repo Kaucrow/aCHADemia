@@ -1,32 +1,53 @@
-GradeSheet:
-  GetActiveCourses: |
+Course:
+  GetActive: |
     SELECT materia_id subject_id, MIN(c.curso_de) name
     FROM curso c
     WHERE
       c.curso_dt_ini <= CURRENT_DATE AND
       c.curso_dt_end > CURRENT_DATE
-    GROUP BY materia_id
+    GROUP BY subject_id
     ORDER BY name
 
-  GetCourseSections: |
+Section:
+  GetByCourse: |
     SELECT s.seccion_id section_id, s.seccion_de name
     FROM seccion s
     INNER JOIN curso c ON s.seccion_id = c.seccion_id
-    WHERE c.materia_id = @materia_id
+    WHERE c.materia_id = @subject_id
     ORDER BY name
 
-  GetCourseStudents: |
+Student:
+  GetByCourseSection: |
     SELECT p.persona_nom name, p.persona_ci ci, AVG(cal.calificacion_am) grade
     FROM curso cur
     INNER JOIN inscripcion i ON cur.curso_id = i.curso_id
     INNER JOIN persona p ON i.alumno_ci = p.persona_ci
     INNER JOIN calificacion cal ON i.inscripcion_id = cal.inscripcion_id
     WHERE
-      cur.materia_id = @materia_id AND
-      cur.seccion_id = @seccion_id
+      cur.materia_id = @subject_id AND
+      cur.seccion_id = @section_id
     GROUP BY name, ci
     ORDER BY name
 
+Grade:
+  Add: |
+     WITH curso_info AS (
+       SELECT curso_id FROM curso
+       WHERE
+       materia_id = @subject_id AND
+       seccion_id = @section_id
+       LIMIT 1
+     ),
+     inscripcion_info AS (
+       SELECT i.inscripcion_id 
+       FROM inscripcion i
+       JOIN curso_info c ON i.curso_id = c.curso_id
+       WHERE i.alumno_ci = @student_ci
+       LIMIT 1
+     )
+     INSERT INTO calificacion (inscripcion_id, calificacion_am)
+     SELECT i.inscripcion_id, @grade
+     FROM inscripcion_info i
 AddPerson:
   InsertPerson: |
     INSERT INTO persona (persona_ci, tipo_persona_id, persona_nom)
