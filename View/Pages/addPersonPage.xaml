@@ -69,6 +69,7 @@
 
                     <userControls:Button Grid.Row="2"
                                          ButtonContent="Guardar"
+                                         Command="{Binding AddPersonCommand}"
                                          FontSize="12"
                                          CornerRadius="4"
                                          Margin="0,20,0,0" Height="40"/>
@@ -89,7 +90,7 @@
                         
                         
                         
-                                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
+                                Text="{Binding CurrentPerson.Name, UpdateSourceTrigger=PropertyChanged}" 
                         
                         
                         
@@ -105,9 +106,9 @@
                     <userControls:TextBoxField
                                 DisplayMemberPath="Name"
                         
-                        
-                        
-                                Text="{Binding CI, UpdateSourceTrigger=PropertyChanged}"
+                            
+    
+                                Text="{Binding CurrentPerson.CI, UpdateSourceTrigger=PropertyChanged}"
                         
                         
                         

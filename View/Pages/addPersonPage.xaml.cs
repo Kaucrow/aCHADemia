@@ -37,19 +37,17 @@ namespace aCHADemia.View.Pages
 
         }
 
-        // this isnt part of the proyect, this is just a debugging tool to see if the values are being set correctly
         private void testInput(object sender, RoutedEventArgs e)
         {
             if (DataContext is aCHADemia.ViewModel.AddPersonPageViewModel vm)
             {
                 string tipoPersona = vm.SelectedPersonType ?? "No seleccionado";
-                MessageBox.Show($"CI: {vm.CI}\nNombre: {vm.Name}\nTipo: {tipoPersona}", "Valores actuales");
+                string ci = vm.CurrentPerson?.CI.ToString() ?? "No ingresado";
+                string nombre = vm.CurrentPerson?.Name ?? "No ingresado";
+
+                MessageBox.Show($"CI: {ci}\nNombre: {nombre}\nTipo: {tipoPersona}", "Valores actuales");
             }
         }
 
-        private void VerValores_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

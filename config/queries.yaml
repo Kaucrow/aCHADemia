@@ -26,3 +26,8 @@ GradeSheet:
       cur.seccion_id = @seccion_id
     GROUP BY name, ci
     ORDER BY name
+
+AddPerson:
+  InsertPerson: |
+    INSERT INTO persona (persona_ci, tipo_persona_id, persona_nom)
+    VALUES (@ci, @person_type_id, @name)

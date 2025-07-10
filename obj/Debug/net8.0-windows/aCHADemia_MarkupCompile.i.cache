@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR
 C:\Users\sebas\OneDrive\Escritorio\Repositorios-GitHub\C#\Proyecto - Sistema_Academico (Sebastian Branch)\aCHADemia\App.xaml
 131712075299
 
-45692607434
+46289817765
 213766720961
 View\Pages\AddPersonPage.xaml;View\Pages\GradeRegistrationPage.xaml;View\Pages\GradeSheetPage.xaml;View\Pages\MainMenuPage.xaml;View\Pages\MaintancePage.xaml;View\Pages\ReportsPage.xaml;View\UserControls\BackButton.xaml;View\UserControls\Button.xaml;View\UserControls\DataGrid.xaml;View\UserControls\Dropdown.xaml;View\UserControls\NavigationButton.xaml;View\UserControls\TextBoxField.xaml;View\Windows\MainWindow.xaml;
 
-True
+False
 
