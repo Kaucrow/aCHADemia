@@ -6,13 +6,13 @@ namespace aCHADemia.View.Pages
     /// <summary>
     /// Interaction logic for GradesSheet.xaml
     /// </summary>
-    public partial class GradeSheetPage : Page
+    public partial class GradeRegistrationPage : Page
     {
-        public GradeSheetPage()
+        public GradeRegistrationPage()
         {
             InitializeComponent();
 
-            GradeSheetViewModel vm = new GradeSheetViewModel();
+            GradeRegistrationViewModel vm = new GradeRegistrationViewModel();
             DataContext = vm;
             Loaded += async (s, e) => await vm.InitializeAsync();
         }

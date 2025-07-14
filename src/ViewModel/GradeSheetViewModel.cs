@@ -1,69 +1,128 @@
-﻿using aCHADemia.Model;
+﻿using aCHADemia.Core.DBComponent;
+using aCHADemia.Core.Classes;
+using aCHADemia.Model;
 using aCHADemia.MVVM;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Npgsql;
 using System.Collections.ObjectModel;
+using System.Data.Common;
+using System.Diagnostics;
 
 namespace aCHADemia.ViewModel
 {
-    internal class GradeSheetViewModel : ViewModelBase
+    internal partial class GradeSheetViewModel : ViewModelBase
     {
-        private ObservableCollection<Subject>? _subjects;
-        private Subject? _selectedSubject;
+        [ObservableProperty]
+        private ObservableCollection<Course> _courses = [];
 
-        public ObservableCollection<Subject>? Subjects
-        {
-            get => _subjects;
-            set
-            {
-                _subjects = value;
-                OnPropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private Course? _selectedCourse;
 
-        public Subject? SelectedSubject
-        {
-            get => _selectedSubject;
-            set
-            {
-                _selectedSubject = value;
-                OnPropertyChanged();
-            }
-        }
+        [ObservableProperty]
+        private ObservableCollection<Section> _sections = [];
 
-        public List<string> ColumnHeaders { get; } = new List<string> { "ID", "Name", "Price" };
-        public List<List<string>> Rows { get; } = new List<List<string>>
-        {
-            new List<string> { "101", "Laptop", "$999" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "103", "Elatla", "2 Bs." },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-            new List<string> { "102", "Mouse", "$25" },
-        };
+        [ObservableProperty]
+        private Section? _selectedSection;
+
+        public List<string> ColumnHeaders { get; } = ["Alumno", "C.I.", "Calificación"];
+
+        [ObservableProperty]
+        private ObservableCollection<DataGridRow> _studentRows = [];
 
         public GradeSheetViewModel()
         {
-            // Initialize with sample data
-            Subjects = new ObservableCollection<Subject>
+        }
+
+        async partial void OnSelectedCourseChanged(Course? value)
         {
-            new Subject { Id = 1, Name = "Matemáticas", Code = "MATH-101" },
-            new Subject { Id = 2, Name = "Física", Code = "PHYS-201" },
-            new Subject { Id = 3, Name = "Química", Code = "CHEM-101" },
-            new Subject { Id = 4, Name = "Biología", Code = "BIO-101" },
-            new Subject { Id = 5, Name = "Literatura", Code = "LIT-202" }
-        };
+            Sections.Clear();
+            SelectedSection = null;
+
+            try
+            {
+                using (DbDataReader reader = await App.Db?.Fetch(
+                    DbType.Postgres,
+                    Config.Queries.Section.GetByCourse,
+                    new NpgsqlParameter("@subject_id", SelectedCourse?.SubjectId)
+                ))
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        var sectionId = reader.GetInt32(reader.GetOrdinal("section_id"));
+                        var name = reader.GetString(reader.GetOrdinal("name"));
+
+                        Sections.Add(new Section
+                        {
+                            Id = sectionId,
+                            Name = name
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading sections: {ex.Message}");
+            }
+        }
+
+        async partial void OnSelectedSectionChanged(Section? value)
+        {
+            StudentRows.Clear();
+
+            if (value == null) return;
+
+            try
+            {
+                using (DbDataReader reader = await App.Db?.Fetch(
+                    DbType.Postgres,
+                    Config.Queries.Student.GetByCourseSection,
+                    new NpgsqlParameter("@subject_id", SelectedCourse?.SubjectId),
+                    new NpgsqlParameter("@section_id", SelectedSection?.Id)
+                ))
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        var name = reader.GetString(reader.GetOrdinal("name"));
+                        var ci = reader.GetInt32(reader.GetOrdinal("ci"));
+                        var grade = reader.GetFloat(reader.GetOrdinal("grade"));
+
+                        var row = new DataGridRow(name, ci.ToString(), grade.ToString());
+                        StudentRows.Add(row);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading sections: {ex.Message}");
+            }
+        }
+
+        public async Task InitializeAsync()
+        {
+            try
+            {
+                using (DbDataReader reader = await App.Db?.Fetch(
+                    DbType.Postgres,
+                    Config.Queries.Course.GetActive
+                ))
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        var subjectId = reader.GetInt32(reader.GetOrdinal("subject_id"));
+                        var name = reader.GetString(reader.GetOrdinal("name"));
+
+                        Courses.Add(new Course
+                        {
+                            SubjectId = subjectId,
+                            Name = name
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading courses: {ex.Message}");
+            }
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿<Page
-  x:Class="aCHADemia.View.Pages.GradeSheetPage"
+  x:Class="aCHADemia.View.Pages.GradeRegistrationPage"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:vm="clr-namespace:aCHADemia.ViewModel"
+  xmlns:ext="clr-namespace:aCHADemia.Core.MarkupExtensions"
   xmlns:local="clr-namespace:aCHADemia"
   xmlns:userControls="clr-namespace:aCHADemia.View.UserControls"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -11,7 +12,7 @@
   mc:Ignorable="d"
   d:DesignHeight="768"
   d:DesignWidth="1366"
-  d:DataContext="{d:DesignInstance Type=vm:GradeSheetViewModel, IsDesignTimeCreatable=True}"
+  d:DataContext="{d:DesignInstance Type=vm:GradeRegistrationViewModel, IsDesignTimeCreatable=True}"
   Background="{StaticResource LightBackgroundBrush}">
 
     <Grid>
@@ -40,7 +41,7 @@
                 FontSize="18"
                 FontWeight="Medium"
                 Foreground="{StaticResource LightAccentBrush}"
-                Text="Planilla de notas" />
+                Text="Registro de notas" />
 
             <Border Grid.Row="1"
                 Width="Auto"
@@ -80,7 +81,7 @@
 
                             <userControls:Dropdown 
                                 Width="200"
-                                ItemsSource="{Binding Courses}" 
+                                ItemsSource="{Binding Courses}"
                                 SelectedItem="{Binding SelectedCourse, Mode=TwoWay}"
                                 DisplayMemberPath="Name"
                                 Background="{StaticResource LightBackgroundBrush}"
@@ -107,7 +108,7 @@
 
                             <userControls:Dropdown 
                                 Width="200"
-                                ItemsSource="{Binding Sections}" 
+                                ItemsSource="{Binding Sections}"
                                 SelectedItem="{Binding SelectedSection, Mode=TwoWay}"
                                 DisplayMemberPath="Name"
                                 Background="{StaticResource LightBackgroundBrush}"
@@ -124,7 +125,8 @@
                     <!-- Data grid -->
                     <userControls:DataGrid Grid.Row="1"
                             ColumnHeaders="{Binding ColumnHeaders}"
-                            Rows="{Binding StudentRows, Mode=TwoWay}"
+                            Rows="{Binding StudentRows}"
+                            CanEditColumns="{ext:BoolArray 'false,false,true'}"
                             BorderColor="{StaticResource LightAccentBrush}"
                             BorderThickness="2"
                             BorderRadius="6"
@@ -134,7 +136,9 @@
 
                     <!--  Get Report Button  -->
                     <userControls:Button Grid.Row="2"
-                                         ButtonContent="Obtener planilla"
+                                         Command="{Binding SaveCommand}"
+                                         ButtonContent="Guardar"
+                                         Width="100"
                                          FontSize="12"
                                          CornerRadius="4"
                                          Margin="0,20,0,0"/>

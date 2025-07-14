@@ -1,5 +1,6 @@
 ﻿using aCHADemia.MVVM;
 using aCHADemia.View.Pages;
+using System.Diagnostics;
 
 namespace aCHADemia.ViewModel
 {
@@ -8,10 +9,12 @@ namespace aCHADemia.ViewModel
         public MainMenuViewModel()
         {
             NavigateToReportsCommand = new RelayCommand(execute => NavigateTo<ReportsPage>());
+            NavigateToGradeRegistrationCommand = new RelayCommand(execute => NavigateTo<GradeRegistrationPage>());
             NavigateToInscriptionCommand = new RelayCommand(execute => NavigateTo<InscriptionPage>());
         }
 
         public RelayCommand NavigateToReportsCommand { get; }
+        public RelayCommand NavigateToGradeRegistrationCommand { get; }
         public RelayCommand NavigateToInscriptionCommand { get; }
         public RelayCommand HelloWorldCommand { get; }
     }
