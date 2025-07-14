@@ -26,6 +26,7 @@
                 Icon="User"
                 Text="Inscripción"
                 Brush="{StaticResource LightPrimaryBrush}"
+                Command="{Binding NavigateToInscriptionCommand}"
                 IconSize="80"
                 FontSize="16"
                 Margin="0,0,60,0"
