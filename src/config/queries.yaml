@@ -82,3 +82,8 @@ Subject:
     SELECT materia_id, materia_de name
     FROM Materia
     ORDER BY materia_de
+
+AddPerson:
+  InsertPerson: |
+    INSERT INTO persona (persona_ci, tipo_persona_id, persona_nom)
+    VALUES (@ci, @person_type_id, @name)
