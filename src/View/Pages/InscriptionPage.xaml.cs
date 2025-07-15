@@ -8,11 +8,18 @@ namespace aCHADemia.View.Pages
     /// </summary>
     public partial class InscriptionPage : Page
     {
+        private InscriptionViewModel _viewModel;
         public InscriptionPage()
         {
             InitializeComponent();
-            InscriptionViewModel vm = new InscriptionViewModel();
-            DataContext = vm;
+            _viewModel = new InscriptionViewModel();
+            DataContext = _viewModel;
+            Loaded += Page_Loaded;
+        }
+
+        private async void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            await _viewModel.InitializeAsync();
         }
     }
 }
