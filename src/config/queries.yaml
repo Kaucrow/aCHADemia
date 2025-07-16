@@ -52,3 +52,11 @@ AddPerson:
   InsertPerson: |
     INSERT INTO persona (persona_ci, tipo_persona_id, persona_nom)
     VALUES (@ci, @person_type_id, @name)
+
+Person:
+  GetByName: |
+    SELECT persona_ci AS persona_ci, 
+    persona_nom AS persona_nom, 
+    tipo_persona_id AS tipo_persona_id 
+    FROM persona 
+    WHERE persona_ci = @person_ci
