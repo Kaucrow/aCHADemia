@@ -30,10 +30,12 @@ namespace aCHADemia.ViewModel
         private string? _personCI;
 
         public aCHADemia.MVVM.RelayCommand SearchPersonCommand { get; }
+        public aCHADemia.MVVM.RelayCommand DeletePersonCommand { get; }
 
         public MaintenancePersonViewModel()
         {
             SearchPersonCommand = new aCHADemia.MVVM.RelayCommand(async _ => await SearchPersonAsync());
+            DeletePersonCommand = new aCHADemia.MVVM.RelayCommand(async _ => await DeletePersonAsync());
         }
 
         private async Task SearchPersonAsync()
@@ -67,6 +69,35 @@ namespace aCHADemia.ViewModel
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al buscar personas: {ex.Message}");
+            }
+        }
+
+        private async Task DeletePersonAsync()
+        {
+            var selectedRow = PersonRows.FirstOrDefault(r => r.IsSelected);
+            if (selectedRow == null)
+            {
+                MessageBox.Show("Seleccione un registro para eliminar.");
+                return;
+            }
+
+            var ci = selectedRow.Values[0]; // Asegúrate que el primer valor es persona_ci
+
+            try
+            {
+                // Ejecuta la consulta de borrado (ajusta el nombre de la consulta si es necesario)
+                await App.Db.Execute(
+                    aCHADemia.Core.DBComponent.DbType.Postgres,
+                    Config.Queries.Person.DeleteByCI,
+                    new NpgsqlParameter("@person_ci", int.Parse(ci))
+                );
+
+                PersonRows.Remove(selectedRow);
+                MessageBox.Show("Registro eliminado correctamente.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al eliminar persona: {ex.Message}");
             }
         }
     }

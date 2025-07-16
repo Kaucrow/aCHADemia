@@ -7,6 +7,13 @@ Course:
       c.curso_dt_end > CURRENT_DATE
     GROUP BY subject_id
     ORDER BY name
+  GetById: |
+    SELECT curso_dt_ini, curso_dt_end, curso_de 
+    FROM curso 
+    WHERE curso_id = @curso_id
+  DeleteById: | 
+    DELETE FROM curso 
+    WHERE curso_id = @curso_id
 
 Section:
   GetByCourse: |
@@ -15,6 +22,14 @@ Section:
     INNER JOIN curso c ON s.seccion_id = c.seccion_id
     WHERE c.materia_id = @subject_id
     ORDER BY name
+  GetById: |
+    SELECT seccion_id, seccion_de 
+    FROM seccion 
+    WHERE seccion_id = @seccion_id
+  DeleteById: |
+    DELETE 
+    FROM seccion 
+    WHERE seccion_id = @seccion_id
 
 Student:
   GetByCourseSection: |
@@ -60,3 +75,17 @@ Person:
     tipo_persona_id AS tipo_persona_id 
     FROM persona 
     WHERE persona_ci = @person_ci
+  DeleteByCI: |
+    DELETE FROM persona 
+    WHERE persona_ci = @person_ci
+
+Subject:
+  GetById: |
+    SELECT materia_id, materia_de 
+    FROM materia 
+    WHERE materia_id = @materia_id
+  DeleteById: |
+    DELETE 
+    FROM materia 
+    WHERE materia_id = @materia_id
+

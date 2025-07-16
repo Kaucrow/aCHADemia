@@ -79,10 +79,10 @@
                                 Grid.Column="0"
                                 Width="250"
                                 x:Name="PersonInput"
-                                Text="{Binding SectionID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Text="{Binding SectionId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 VerticalAlignment="Center" Height="40" 
                                 />
-                            <Button Grid.Column="1" Width="50" Height="50" Command="{Binding SearchPersonCommand}" Margin="0,0,0,0"
+                            <Button Grid.Column="1" Width="50" Height="50" Command="{Binding SearchSectionCommand}" Margin="0,0,0,0"
                                     Background="Transparent" BorderBrush="{x:Null}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <fa:ImageAwesome Icon="Search"
                                                 Foreground="{StaticResource LightPrimaryBrush}"
@@ -90,7 +90,7 @@
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"/>
                             </Button>
-                            <Button Grid.Column="2" Width="50" Height="50" Command="{Binding DeletePersonCommand}"
+                            <Button Grid.Column="2" Width="50" Height="50" Command="{Binding DeleteSectionCommand}"
                                     Background="Transparent" BorderBrush="{x:Null}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <fa:ImageAwesome Icon="Trash"
                                                 Foreground="{StaticResource LightPrimaryBrush}"
@@ -105,7 +105,7 @@
                     <userControls:DataGrid Grid.Row="1"
                             ColumnHeaders="{Binding ColumnHeaders}"
                             Rows="{Binding SectionRows}"
-                            CanEditColumns="{ext:BoolArray 'false,false,true'}"
+                            CanEditColumns="{ext:BoolArray 'false,true'}"
                             BorderColor="{StaticResource LightAccentBrush}"
                             BorderThickness="2"
                             BorderRadius="6"
