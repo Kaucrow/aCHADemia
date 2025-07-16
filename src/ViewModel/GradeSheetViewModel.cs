@@ -1,5 +1,5 @@
-﻿using aCHADemia.Core.Classes;
-using aCHADemia.Core.DBComponent;
+﻿using aCHADemia.Core.DBComponent;
+using aCHADemia.Core.Classes;
 using aCHADemia.Model;
 using aCHADemia.MVVM;
 using aCHADemia.View.Pages;
