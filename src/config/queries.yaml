@@ -8,11 +8,13 @@ Course:
     GROUP BY subject_id
     ORDER BY name
   GetById: |
-    SELECT curso_dt_ini, curso_dt_end, curso_de 
+    SELECT c.curso_dt_ini, c.curso_dt_end, c.curso_de, s.seccion_de
+    FROM curso c
+    INNER JOIN seccion s ON c.seccion_id = s.seccion_id
+    WHERE c.curso_id = @curso_id
+  DeleteById: |
+    DELETE 
     FROM curso 
-    WHERE curso_id = @curso_id
-  DeleteById: | 
-    DELETE FROM curso 
     WHERE curso_id = @curso_id
 
 Section:
@@ -70,13 +72,13 @@ AddPerson:
 
 Person:
   GetByName: |
-    SELECT persona_ci AS persona_ci, 
-    persona_nom AS persona_nom, 
-    tipo_persona_id AS tipo_persona_id 
-    FROM persona 
-    WHERE persona_ci = @person_ci
+    SELECT p.persona_ci, p.persona_nom, t.tipo_persona_de
+    FROM persona p
+    INNER JOIN tipo_persona t ON p.tipo_persona_id = t.tipo_persona_id
+    WHERE p.persona_ci = @person_ci
   DeleteByCI: |
-    DELETE FROM persona 
+    DELETE 
+    FROM persona 
     WHERE persona_ci = @person_ci
 
 Subject:

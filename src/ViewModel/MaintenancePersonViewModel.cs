@@ -50,7 +50,6 @@ namespace aCHADemia.ViewModel
 
             try
             {
-             
                 using var reader = await App.Db.Fetch(
                     aCHADemia.Core.DBComponent.DbType.Postgres,
                     Config.Queries.Person.GetByName,
@@ -61,7 +60,7 @@ namespace aCHADemia.ViewModel
                 {
                     var ci = reader["persona_ci"].ToString();
                     var nombre = reader["persona_nom"].ToString();
-                    var tipo = reader["tipo_persona_id"].ToString();
+                    var tipo = reader["tipo_persona_de"].ToString(); 
 
                     PersonRows.Add(new SelectableDataGridRow(ci, nombre, tipo));
                 }
@@ -81,11 +80,10 @@ namespace aCHADemia.ViewModel
                 return;
             }
 
-            var ci = selectedRow.Values[0]; // Asegúrate que el primer valor es persona_ci
+            var ci = selectedRow.Values[0]; 
 
             try
             {
-                // Ejecuta la consulta de borrado (ajusta el nombre de la consulta si es necesario)
                 await App.Db.Execute(
                     aCHADemia.Core.DBComponent.DbType.Postgres,
                     Config.Queries.Person.DeleteByCI,

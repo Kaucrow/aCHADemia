@@ -17,7 +17,7 @@ namespace aCHADemia.ViewModel
 {
     internal partial class MaintenanceCourseViewModel : ViewModelBase
     {
-        public List<string> ColumnHeaders { get; } = ["Fecha Inicio", "Fecha Fin", "Descripcion"];
+        public List<string> ColumnHeaders { get; } = ["Inicio", "Fin", "Descripcion", "Seccion"];
 
         [ObservableProperty]
         private ObservableCollection<SelectableDataGridRow> _courseRows = [];
@@ -57,8 +57,9 @@ namespace aCHADemia.ViewModel
                     var fechaIni = reader["curso_dt_ini"].ToString();
                     var fechaFin = reader["curso_dt_end"].ToString();
                     var descripcion = reader["curso_de"].ToString();
+                    var seccion = reader["seccion_de"].ToString();
 
-                    CourseRows.Add(new SelectableDataGridRow(fechaIni, fechaFin, descripcion));
+                    CourseRows.Add(new SelectableDataGridRow(fechaIni, fechaFin, descripcion, seccion));
                 }
             }
             catch (Exception ex)
@@ -76,7 +77,6 @@ namespace aCHADemia.ViewModel
                 return;
             }
 
-            // Suponiendo que el primer valor es el ID del curso, si no, ajusta según corresponda
             var id = CourseId;
             if (string.IsNullOrWhiteSpace(id))
             {

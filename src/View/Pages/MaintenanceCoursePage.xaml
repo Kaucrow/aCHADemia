@@ -45,8 +45,8 @@
                 Text="Mantenimiento Curso" />
 
             <Border Grid.Row="1"
-                Width="541"
-                Height="500"
+                Width="750"
+                Height="550"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 BorderBrush="{StaticResource LightAccentBrush}"
@@ -105,7 +105,7 @@
                     <userControls:DataGrid Grid.Row="1"
                             ColumnHeaders="{Binding ColumnHeaders}"
                             Rows="{Binding CourseRows}"
-                            CanEditColumns="{ext:BoolArray 'false,false,true'}"
+                            CanEditColumns="{ext:BoolArray 'false,false,false,false'}"
                             BorderColor="{StaticResource LightAccentBrush}"
                             BorderThickness="2"
                             BorderRadius="6"
