@@ -20,9 +20,9 @@
         <userControls:BackButton Command="{Binding GoBackCommand}"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
-                               Margin="0"
+                               Margin="30,30,0,0"
                                IconBrush="{StaticResource LightPrimaryBrush}"
-                               TextBrush="{StaticResource LightPrimaryBrush}"/>
+                               TextBrush="{StaticResource LightPrimaryBrush}" RenderTransformOrigin="0.483,0.441"/>
 
         <!-- Title and main container grid -->
         <Grid

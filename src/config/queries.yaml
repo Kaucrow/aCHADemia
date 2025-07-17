@@ -16,6 +16,11 @@ Course:
     DELETE 
     FROM curso 
     WHERE curso_id = @curso_id
+  UpdateDates: |
+    UPDATE curso
+    SET curso_dt_ini = @curso_dt_ini,
+        curso_dt_end = @curso_dt_end
+    WHERE curso_id = @curso_id
 
 Section:
   GetByCourse: |
@@ -31,6 +36,10 @@ Section:
   DeleteById: |
     DELETE 
     FROM seccion 
+    WHERE seccion_id = @seccion_id
+  UpdateById: |
+    UPDATE seccion
+    SET seccion_de = @seccion_de
     WHERE seccion_id = @seccion_id
 
 Student:
@@ -80,6 +89,10 @@ Person:
     DELETE 
     FROM persona 
     WHERE persona_ci = @person_ci
+  UpdateName: |
+    UPDATE persona
+    SET persona_nom = @persona_nom
+    WHERE persona_ci = @persona_ci
 
 Subject:
   GetById: |
@@ -89,5 +102,9 @@ Subject:
   DeleteById: |
     DELETE 
     FROM materia 
+    WHERE materia_id = @materia_id
+  UpdateById: |
+    UPDATE materia 
+    SET materia_de = @materia_de 
     WHERE materia_id = @materia_id
 

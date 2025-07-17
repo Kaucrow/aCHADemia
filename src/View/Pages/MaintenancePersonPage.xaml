@@ -20,7 +20,7 @@
         <userControls:BackButton Command="{Binding GoBackCommand}"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
-                               Margin="0"
+                               Margin="30,30,0,0"
                                IconBrush="{StaticResource LightPrimaryBrush}"
                                TextBrush="{StaticResource LightPrimaryBrush}"/>
 
@@ -105,7 +105,7 @@
                     <userControls:DataGrid Grid.Row="1"
                             ColumnHeaders="{Binding ColumnHeaders}"
                             Rows="{Binding PersonRows}"
-                            CanEditColumns="{ext:BoolArray 'false,false,true'}"
+                            CanEditColumns="{ext:BoolArray 'false,true,false'}"
                             BorderColor="{StaticResource LightAccentBrush}"
                             BorderThickness="2"
                             BorderRadius="6"

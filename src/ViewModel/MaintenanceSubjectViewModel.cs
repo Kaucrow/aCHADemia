@@ -27,12 +27,14 @@ namespace aCHADemia.ViewModel
 
         public aCHADemia.MVVM.RelayCommand SearchSubjectCommand { get; }
         public aCHADemia.MVVM.RelayCommand DeleteSubjectCommand { get; }
+        public aCHADemia.MVVM.RelayCommand SaveCommand { get; }
         
 
         public MaintenanceSubjectViewModel()
         {
             SearchSubjectCommand = new aCHADemia.MVVM.RelayCommand(async _ => await SearchSubjectAsync());
             DeleteSubjectCommand = new aCHADemia.MVVM.RelayCommand(async _ => await DeleteSubjectAsync());
+            SaveCommand = new aCHADemia.MVVM.RelayCommand(async _ => await SaveSubjectAsync());
         }
 
         private async Task SearchSubjectAsync()
@@ -47,7 +49,6 @@ namespace aCHADemia.ViewModel
 
             try
             {
-                MessageBox.Show($"Buscando materia con ID: {SubjectId}");
 
                 using var reader = await App.Db.Fetch(
                     aCHADemia.Core.DBComponent.DbType.Postgres,
@@ -105,6 +106,41 @@ namespace aCHADemia.ViewModel
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al eliminar materia: {ex.Message}");
+            }
+        }
+
+        private async Task SaveSubjectAsync()
+        {
+            var selectedRow = SubjectRows.FirstOrDefault(r => r.IsSelected);
+            if (selectedRow == null)
+            {
+                MessageBox.Show("Seleccione una materia para guardar cambios.");
+                return;
+            }
+
+            var id = selectedRow.Values[0];
+            var nombre = selectedRow.Values[1];
+
+            if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(nombre))
+            {
+                MessageBox.Show("Los campos ID y Nombre no pueden estar vacíos.");
+                return;
+            }
+
+            try
+            {
+                await App.Db.Execute(
+                    aCHADemia.Core.DBComponent.DbType.Postgres,
+                    Config.Queries.Subject.UpdateById,
+                    new NpgsqlParameter("@materia_id", int.Parse(id)),
+                    new NpgsqlParameter("@materia_de", nombre)
+                );
+
+                MessageBox.Show("Cambios guardados correctamente.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar cambios: {ex.Message}");
             }
         }
     }

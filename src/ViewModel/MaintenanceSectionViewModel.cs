@@ -27,11 +27,13 @@ namespace aCHADemia.ViewModel
 
         public aCHADemia.MVVM.RelayCommand SearchSectionCommand { get; }
         public aCHADemia.MVVM.RelayCommand DeleteSectionCommand { get; }
+        public aCHADemia.MVVM.RelayCommand SaveCommand { get; }
 
         public MaintenanceSectionViewModel()
         {
             SearchSectionCommand = new aCHADemia.MVVM.RelayCommand(async _ => await SearchSectionAsync());
             DeleteSectionCommand = new aCHADemia.MVVM.RelayCommand(async _ => await DeleteSectionAsync());
+            SaveCommand = new aCHADemia.MVVM.RelayCommand(async _ => await SaveChangesAsync());
         }
 
         private async Task SearchSectionAsync()
@@ -102,6 +104,30 @@ namespace aCHADemia.ViewModel
             {
                 MessageBox.Show($"Error al eliminar sección: {ex.Message}");
             }
+        }
+
+        private async Task SaveChangesAsync()
+        {
+            foreach (var row in SectionRows)
+            {
+                var id = row.Values[0];
+                var descripcion = row.Values[1];
+
+                try
+                {
+                    await App.Db.Execute(
+                        aCHADemia.Core.DBComponent.DbType.Postgres,
+                        Config.Queries.Section.UpdateById,
+                        new NpgsqlParameter("@seccion_id", int.Parse(id)),
+                        new NpgsqlParameter("@seccion_de", descripcion)
+                    );
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al guardar cambios para ID {id}: {ex.Message}");
+                }
+            }
+            MessageBox.Show("Cambios guardados correctamente.");
         }
     }
 }

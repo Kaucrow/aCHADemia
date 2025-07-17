@@ -31,11 +31,13 @@ namespace aCHADemia.ViewModel
 
         public aCHADemia.MVVM.RelayCommand SearchPersonCommand { get; }
         public aCHADemia.MVVM.RelayCommand DeletePersonCommand { get; }
+        public aCHADemia.MVVM.RelayCommand SaveCommand { get; }
 
         public MaintenancePersonViewModel()
         {
             SearchPersonCommand = new aCHADemia.MVVM.RelayCommand(async _ => await SearchPersonAsync());
             DeletePersonCommand = new aCHADemia.MVVM.RelayCommand(async _ => await DeletePersonAsync());
+            SaveCommand = new aCHADemia.MVVM.RelayCommand(async _ => await SaveChangesAsync());
         }
 
         private async Task SearchPersonAsync()
@@ -97,6 +99,30 @@ namespace aCHADemia.ViewModel
             {
                 MessageBox.Show($"Error al eliminar persona: {ex.Message}");
             }
+        }
+
+        private async Task SaveChangesAsync()
+        {
+            foreach (var row in PersonRows)
+            {
+                var ci = row.Values[0];
+                var nombre = row.Values[1];
+
+                try
+                {
+                    await App.Db.Execute(
+                        aCHADemia.Core.DBComponent.DbType.Postgres,
+                        Config.Queries.Person.UpdateName,
+                        new NpgsqlParameter("@persona_ci", int.Parse(ci)),
+                        new NpgsqlParameter("@persona_nom", nombre)
+                    );
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al guardar cambios para CI {ci}: {ex.Message}");
+                }
+            }
+            MessageBox.Show("Cambios guardados correctamente.");
         }
     }
 }

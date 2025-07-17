@@ -27,11 +27,13 @@ namespace aCHADemia.ViewModel
 
         public aCHADemia.MVVM.RelayCommand SearchCourseCommand { get; }
         public aCHADemia.MVVM.RelayCommand DeleteCourseCommand { get; }
+        public aCHADemia.MVVM.RelayCommand SaveCommand { get; }
 
         public MaintenanceCourseViewModel()
         {
             SearchCourseCommand = new aCHADemia.MVVM.RelayCommand(async _ => await SearchCourseAsync());
             DeleteCourseCommand = new aCHADemia.MVVM.RelayCommand(async _ => await DeleteCourseAsync());
+            SaveCommand = new aCHADemia.MVVM.RelayCommand(async _ => await SaveChangesAsync());
         }
 
         private async Task SearchCourseAsync()
@@ -99,6 +101,37 @@ namespace aCHADemia.ViewModel
             {
                 MessageBox.Show($"Error al eliminar curso: {ex.Message}");
             }
+        }
+
+        private async Task SaveChangesAsync()
+        {
+            if (string.IsNullOrWhiteSpace(CourseId))
+            {
+                MessageBox.Show("No se puede determinar el ID del curso a actualizar.");
+                return;
+            }
+
+            foreach (var row in CourseRows)
+            {
+                var fechaIni = row.Values[0];
+                var fechaFin = row.Values[1];
+
+                try
+                {
+                    await App.Db.Execute(
+                        aCHADemia.Core.DBComponent.DbType.Postgres,
+                        Config.Queries.Course.UpdateDates,
+                        new NpgsqlParameter("@curso_id", int.Parse(CourseId)),
+                        new NpgsqlParameter("@curso_dt_ini", DateTime.Parse(fechaIni)),
+                        new NpgsqlParameter("@curso_dt_end", DateTime.Parse(fechaFin))
+                    );
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al guardar cambios para el curso {CourseId}: {ex.Message}");
+                }
+            }
+            MessageBox.Show("Cambios guardados correctamente.");
         }
     }
 }
