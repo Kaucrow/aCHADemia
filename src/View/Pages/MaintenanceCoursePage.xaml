@@ -111,7 +111,7 @@
                             BorderRadius="6"
                             FontFamily="{StaticResource NormalFont}"
                             FontColor="{StaticResource LightPrimaryBrush}"
-                            ColumnWidth="120" />
+                            ColumnWidth="160" />
 
                     <!--  Save Button  -->
                     <userControls:Button Grid.Row="2"
