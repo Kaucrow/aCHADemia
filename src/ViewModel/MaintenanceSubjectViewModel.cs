@@ -111,37 +111,29 @@ namespace aCHADemia.ViewModel
 
         private async Task SaveSubjectAsync()
         {
-            var selectedRow = SubjectRows.FirstOrDefault(r => r.IsSelected);
-            if (selectedRow == null)
+            foreach (var row in SubjectRows)
             {
-                MessageBox.Show("Seleccione una materia para guardar cambios.");
-                return;
-            }
+                var id = row.Values[0];
+                var nombre = row.Values[1];
 
-            var id = selectedRow.Values[0];
-            var nombre = selectedRow.Values[1];
+                if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(nombre))
+                    continue;
 
-            if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(nombre))
-            {
-                MessageBox.Show("Los campos ID y Nombre no pueden estar vacíos.");
-                return;
+                try
+                {
+                    await App.Db.Execute(
+                        aCHADemia.Core.DBComponent.DbType.Postgres,
+                        Config.Queries.Subject.UpdateById,
+                        new NpgsqlParameter("@materia_id", int.Parse(id)),
+                        new NpgsqlParameter("@materia_de", nombre)
+                    );
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al guardar cambios para ID {id}: {ex.Message}");
+                }
             }
-
-            try
-            {
-                await App.Db.Execute(
-                    aCHADemia.Core.DBComponent.DbType.Postgres,
-                    Config.Queries.Subject.UpdateById,
-                    new NpgsqlParameter("@materia_id", int.Parse(id)),
-                    new NpgsqlParameter("@materia_de", nombre)
-                );
-
-                MessageBox.Show("Cambios guardados correctamente.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al guardar cambios: {ex.Message}");
-            }
+            MessageBox.Show("Cambios guardados correctamente.");
         }
     }
 }
