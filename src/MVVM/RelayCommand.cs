@@ -11,6 +11,7 @@ namespace aCHADemia.MVVM
     {
         private readonly Action<object> _execute;
         private readonly Func<object, bool> _canExecute;
+        private Action executeGeneratePdfReport;
 
         public event EventHandler CanExecuteChanged
         {
@@ -22,6 +23,11 @@ namespace aCHADemia.MVVM
         {
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
+        }
+
+        public RelayCommand(Action executeGeneratePdfReport)
+        {
+            this.executeGeneratePdfReport = executeGeneratePdfReport;
         }
 
         public bool CanExecute(object? parameter)
