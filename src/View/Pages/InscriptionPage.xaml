@@ -1,0 +1,107 @@
+﻿<Page x:Class="aCHADemia.View.Pages.InscriptionPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:aCHADemia"
+      xmlns:userControls="clr-namespace:aCHADemia.View.UserControls"
+      xmlns:vm="clr-namespace:aCHADemia.ViewModel" 
+      mc:Ignorable="d" 
+      d:DesignHeight="768" d:DesignWidth="1366"
+      Title="InscriptionPage"
+      Background="{StaticResource LightBackgroundBrush}"
+      d:DataContext="{d:DesignInstance vm:InscriptionViewModel}">
+
+    <Grid>
+        <userControls:BackButton Command="{Binding GoBackCommand}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Margin="30"
+                                IconBrush="{StaticResource LightPrimaryBrush}"
+                                TextBrush="{StaticResource LightPrimaryBrush}"/>
+
+        <!-- Title and main container grid -->
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Margin="30,20,0,20" HorizontalAlignment="Left"
+                       FontFamily="{StaticResource NormalFont}" FontSize="18" FontWeight="Medium"
+                       Foreground="{StaticResource LightAccentBrush}" Text="Inscripcion" />
+
+            <Border Grid.Row="1" Width="Auto" Height="418" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    BorderBrush="{StaticResource LightAccentBrush}" BorderThickness="3" CornerRadius="20">
+
+                <!-- Content Container - Horizontal layout -->
+                <Grid Margin="40">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Alumno Section -->
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center" Margin="10">
+                        <TextBlock Text="Alumno" HorizontalAlignment="Center" FontWeight="Medium" FontSize="16"
+                                   TextAlignment="Center" FontFamily="{StaticResource NormalFont}"/>
+                        <ComboBox IsEditable="True" 
+                                  ItemsSource="{Binding AvailableStudents}"
+                                  SelectedItem="{Binding SelectedStudent, Mode=TwoWay}"
+                                  Text="{Binding StudentSearchText, UpdateSourceTrigger=PropertyChanged}"
+                                  DisplayMemberPath="Name"
+                                  IsDropDownOpen="{Binding IsStudentDropdownOpen, Mode=TwoWay}"
+                                  Width="200"
+                                  Margin="0,5,0,5"/>
+                    </StackPanel>
+
+                    <!-- Sección Section -->
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Center" Margin="10">
+                        <TextBlock Text="Sección" HorizontalAlignment="Center" FontWeight="Medium" FontSize="16"
+                                   TextAlignment="Center" FontFamily="{StaticResource NormalFont}"/>
+                        <ComboBox IsEditable="True" 
+                                  ItemsSource="{Binding AvailableSections}"
+                                  SelectedItem="{Binding SelectedSection, Mode=TwoWay}"
+                                  Text="{Binding SectionSearchText, UpdateSourceTrigger=PropertyChanged}"
+                                  DisplayMemberPath="Name"
+                                  IsDropDownOpen="{Binding IsSectionDropdownOpen, Mode=TwoWay}"
+                                  Width="200"
+                                  Margin="0,5,0,5"/>
+                    </StackPanel>
+
+                    <!-- Materia Section -->
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Center" Margin="10">
+                        <TextBlock Text="Materia" FontWeight="Medium" HorizontalAlignment="Center" FontSize="16"
+                                   TextAlignment="Center" FontFamily="{StaticResource NormalFont}"
+                                   Foreground="{StaticResource LightPrimaryBrush}"/>
+                        <ComboBox IsEditable="True"
+                                  ItemsSource="{Binding AvailableSubjects}"
+                                  SelectedItem="{Binding SelectedSubject, Mode=TwoWay}"
+                                  Text="{Binding SubjectSearchText, UpdateSourceTrigger=PropertyChanged}"
+                                  DisplayMemberPath="Name"
+                                  IsDropDownOpen="{Binding IsSubjectDropdownOpen, Mode=TwoWay}"
+                                  Width="200"
+                                  Margin="0,5,0,5"/>
+                    </StackPanel>
+
+                    <!-- Save Button -->
+                    <userControls:Button Grid.Row="2" 
+                                         Grid.ColumnSpan="3" 
+                                         ButtonContent="Guardar" 
+                                         FontSize="12" 
+                                         CornerRadius="4" 
+                                         Margin="0,20,0,0" 
+                                         HorizontalAlignment="Center"
+                                         Command="{Binding SaveInscriptionCommand}"
+                                         />
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>
