@@ -7,6 +7,15 @@ Course:
       c.curso_dt_end > CURRENT_DATE
     GROUP BY subject_id
     ORDER BY name
+  GetBySubjectAndSection: |
+    SELECT curso_id
+    FROM curso
+    WHERE
+      materia_id = @subject_id AND
+      seccion_id = @section_id AND
+      curso_dt_ini <= CURRENT_DATE AND
+      curso_dt_end > CURRENT_DATE
+    LIMIT 1
 
 Section:
   GetByCourse: |
@@ -15,6 +24,10 @@ Section:
     INNER JOIN curso c ON s.seccion_id = c.seccion_id
     WHERE c.materia_id = @subject_id
     ORDER BY name
+  GetAll: |
+    SELECT seccion_id, seccion_de name
+    FROM Seccion
+    ORDER BY seccion_de
 
 Student:
   GetByCourseSection: |
@@ -28,6 +41,11 @@ Student:
       cur.seccion_id = @section_id
     GROUP BY name, ci
     ORDER BY name
+  GetAllStudents: |
+    SELECT persona_ci, persona_nom name, persona_ci IdNumber
+    FROM Persona
+    WHERE tipo_persona_id = 2
+    ORDER BY persona_nom
 
 Grade:
   Add: |
@@ -48,6 +66,23 @@ Grade:
      INSERT INTO calificacion (inscripcion_id, calificacion_am)
      SELECT i.inscripcion_id, @grade
      FROM inscripcion_info i
+
+Inscription:
+  Add: |
+    INSERT INTO Inscripcion (curso_id, alumno_ci, inscripcion_dt)
+    VALUES (@curso_id, @alumno_ci, @inscripcion_dt)
+  CheckExisting: |
+    SELECT inscripcion_id
+    FROM Inscripcion
+    WHERE alumno_ci = @alumno_ci AND curso_id = @curso_id
+    LIMIT 1
+
+Subject:
+  GetAll: |
+    SELECT materia_id, materia_de name
+    FROM Materia
+    ORDER BY materia_de
+
 AddPerson:
   InsertPerson: |
     INSERT INTO persona (persona_ci, tipo_persona_id, persona_nom)
