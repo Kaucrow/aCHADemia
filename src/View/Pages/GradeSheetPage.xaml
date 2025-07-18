@@ -7,6 +7,7 @@
   xmlns:local="clr-namespace:aCHADemia"
   xmlns:userControls="clr-namespace:aCHADemia.View.UserControls"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
   Title="GradeSheetPage"
   mc:Ignorable="d"
   d:DesignHeight="768"
@@ -15,6 +16,12 @@
   Background="{StaticResource LightBackgroundBrush}">
 
     <Grid>
+        <fa:FontAwesome Icon="Trash"
+                                                Foreground="{StaticResource LightPrimaryBrush}"
+                                                Height="32" Width="32"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"/>
+        
         <userControls:BackButton Command="{Binding GoBackCommand}"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"

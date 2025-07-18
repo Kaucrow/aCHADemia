@@ -7,6 +7,20 @@ Course:
       c.curso_dt_end > CURRENT_DATE
     GROUP BY subject_id
     ORDER BY name
+  GetById: |
+    SELECT c.curso_dt_ini, c.curso_dt_end, c.curso_de, s.seccion_de
+    FROM curso c
+    INNER JOIN seccion s ON c.seccion_id = s.seccion_id
+    WHERE c.curso_id = @curso_id
+  DeleteById: |
+    DELETE 
+    FROM curso 
+    WHERE curso_id = @curso_id
+  UpdateDates: |
+    UPDATE curso
+    SET curso_dt_ini = @curso_dt_ini,
+        curso_dt_end = @curso_dt_end
+    WHERE curso_id = @curso_id
   GetBySubjectAndSection: |
     SELECT curso_id
     FROM curso
@@ -24,6 +38,18 @@ Section:
     INNER JOIN curso c ON s.seccion_id = c.seccion_id
     WHERE c.materia_id = @subject_id
     ORDER BY name
+  GetById: |
+    SELECT seccion_id, seccion_de 
+    FROM seccion 
+    WHERE seccion_id = @seccion_id
+  DeleteById: |
+    DELETE 
+    FROM seccion 
+    WHERE seccion_id = @seccion_id
+  UpdateById: |
+    UPDATE seccion
+    SET seccion_de = @seccion_de
+    WHERE seccion_id = @seccion_id
   GetAll: |
     SELECT seccion_id, seccion_de name
     FROM Seccion
@@ -87,3 +113,33 @@ AddPerson:
   InsertPerson: |
     INSERT INTO persona (persona_ci, tipo_persona_id, persona_nom)
     VALUES (@ci, @person_type_id, @name)
+
+Person:
+  GetByName: |
+    SELECT p.persona_ci, p.persona_nom, t.tipo_persona_de
+    FROM persona p
+    INNER JOIN tipo_persona t ON p.tipo_persona_id = t.tipo_persona_id
+    WHERE p.persona_ci = @person_ci
+  DeleteByCI: |
+    DELETE 
+    FROM persona 
+    WHERE persona_ci = @person_ci
+  UpdateName: |
+    UPDATE persona
+    SET persona_nom = @persona_nom
+    WHERE persona_ci = @persona_ci
+
+Subject:
+  GetById: |
+    SELECT materia_id, materia_de 
+    FROM materia 
+    WHERE materia_id = @materia_id
+  DeleteById: |
+    DELETE 
+    FROM materia 
+    WHERE materia_id = @materia_id
+  UpdateById: |
+    UPDATE materia 
+    SET materia_de = @materia_de 
+    WHERE materia_id = @materia_id
+
