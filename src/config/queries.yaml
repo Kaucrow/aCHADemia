@@ -57,11 +57,14 @@ Section:
 
 Student:
   GetByCourseSection: |
-    SELECT p.persona_nom name, p.persona_ci ci, AVG(cal.calificacion_am) grade
+    SELECT 
+    p.persona_nom AS name, 
+    p.persona_ci AS ci, 
+    COALESCE(AVG(cal.calificacion_am), 0) AS grade
     FROM curso cur
     INNER JOIN inscripcion i ON cur.curso_id = i.curso_id
     INNER JOIN persona p ON i.alumno_ci = p.persona_ci
-    INNER JOIN calificacion cal ON i.inscripcion_id = cal.inscripcion_id
+    LEFT JOIN calificacion cal ON i.inscripcion_id = cal.inscripcion_id
     WHERE
       cur.materia_id = @subject_id AND
       cur.seccion_id = @section_id
@@ -103,12 +106,6 @@ Inscription:
     WHERE alumno_ci = @alumno_ci AND curso_id = @curso_id
     LIMIT 1
 
-Subject:
-  GetAll: |
-    SELECT materia_id, materia_de name
-    FROM Materia
-    ORDER BY materia_de
-
 AddPerson:
   InsertPerson: |
     INSERT INTO persona (persona_ci, tipo_persona_id, persona_nom)
@@ -142,4 +139,8 @@ Subject:
     UPDATE materia 
     SET materia_de = @materia_de 
     WHERE materia_id = @materia_id
+  GetAll: |
+    SELECT materia_id, materia_de name
+    FROM Materia
+    ORDER BY materia_de
 

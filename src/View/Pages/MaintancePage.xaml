@@ -61,7 +61,7 @@
                 Margin="0"
                 TextMargin="0,20,0,0"/>
             <userControls:NavigationButton
-                Icon="Search"
+                Icon="Plus"
                 Command="{Binding NavigateToAddPersonCommand}"
                 Brush="{StaticResource LightPrimaryBrush}"
                 IconSize="30"

@@ -16,12 +16,6 @@
   Background="{StaticResource LightBackgroundBrush}">
 
     <Grid>
-        <fa:FontAwesome Icon="Trash"
-                                                Foreground="{StaticResource LightPrimaryBrush}"
-                                                Height="32" Width="32"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"/>
-        
         <userControls:BackButton Command="{Binding GoBackCommand}"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
